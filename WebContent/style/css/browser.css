@@ -1,0 +1,191 @@
+@CHARSET "ISO-8859-1";
+.container {
+	border-radius: inherit;
+	background-color:azure;
+	width: 100% !important;
+	display: table;
+	border-collapse: collapse;
+    padding-right: 1%;
+    padding-left: 1%;
+    padding-top: 1%;
+    margin-bottom:1%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+section{	
+	display: table-cell;
+	width: auto;
+	padding-right: 2%;
+	padding-left: 2%;
+}
+
+#containerSuperiore {
+	border-radius:20px ;
+	border: 1px solid black;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:7%;
+	margin-bottom:10%;
+	width:80%;
+	background-color:azure;
+}
+
+#containerSuperiore .formelement {
+    margin-top: 1.5%;
+    width: 100%;
+        
+}
+
+#containerSuperiore label.registra{
+	display: inline-block;
+    max-width: 100%;
+    width: 25%;
+    font-weight: 700;
+	float:left;
+}
+
+select,input.campi{
+	border-radius: 7px;
+	width: 61%;
+}
+.image-box {
+    text-align: center;
+    margin: auto;
+    display: block;
+    font-size: 20px;
+    width: 40%;
+}
+div.top{
+	border-radius:20px ;
+	background-color: red;
+	padding-right: 4%;
+    padding-left: 4%;
+    padding-top: 0.5%; 
+    padding-bottom: 1%;
+	margin-bottom: 2%;
+}
+.buttonreg{
+	width:20%;
+	margin-bottom:4%; 
+	margin-top: 2%;
+}
+
+
+
+.footer{
+	border: 1px solid black;
+	border-radius:40px;
+	width:99%;
+	margin-left: 6px;
+	background: linear-gradient(141deg, #FF0000 0%, #FF1616 51%, #EE9587 90%);
+	text-align: center;
+	height: 80px !important;
+	position: static;
+    bottom: 0;  
+}
+/*********************************************/
+@media only screen and (max-width: 1060px){
+
+		body {
+			margin-left: auto;
+			margin-right: auto;
+			width: 95%;
+			font-size: small;
+	    }
+		
+		select,input.campi{
+			width: 75%;
+			padding-left:1%;
+			padding-right: 1%;
+		}
+		select{
+			width: 80%;
+		}
+		
+		#containerSuperiore {
+			margin-left:auto;
+			margin-right:auto;
+			margin-top:4%;
+			margin-bottom:30%;
+			width:55%;
+			background-color:azure;
+		}
+				
+		#containerSuperiore label.registra{
+ 		   max-width: 100%;
+    	   width: 30%;
+    	   font-weight: 600;
+		   float:left;
+		}
+		img{
+		width: 80px;
+		height: auto;
+		}
+		
+		.buttonreg{
+			width:55%
+		}
+		.image-box {
+    	text-align: center;
+    	margin: auto;
+    	display: block;
+    	font-size: 10px;
+    	width: 10%;
+    	
+        }
+}
+
+
+/*************************************************************************************/
+@media screen and (max-width: 580px) {
+
+	#containerSuperiore {
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:4%;
+		margin-bottom:30%;
+		width:95%;
+		background-color:azure;
+	}
+	
+	.container {
+	background-color:azure;
+	width: 85%;
+	border-radius: inherit;
+	}
+			
+	#containerSuperiore label.registra {
+ 		max-width: 100%;
+    	width: 40%;
+    	font-weight: 600;
+		float:left;
+	}
+	
+	select,input.campi{
+		font-size:xx-small;
+		width: 65%;
+		padding-left:10%;
+		padding-right: 5%;
+	}
+	.image-box {
+    	text-align: center;
+    	margin: auto;
+    	display: block;
+    	font-size: 10px;
+    	width: 50%;
+    	
+     }
+}
+
+/*************************************************************************************/
+@media screen and (min-width: 450px){
+	
+	.divHorizontal{
+	    display: -webkit-flex; /* Safari */
+	    -webkit-justify-content: space-around; /* Safari 6.1+ */
+	    display: flex;
+	    justify-content: space-around;
+	}
+	
+}
