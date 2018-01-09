@@ -33,8 +33,7 @@ section{
 
 #containerSuperiore .formelement {
     margin-top: 1.5%;
-    width: 100%;
-        
+    width: 100%;       
 }
 
 #containerSuperiore label.registra{
@@ -70,7 +69,42 @@ div.top{
 	margin-bottom:4%; 
 	margin-top: 2%;
 }
+header{
+	border: 1px solid black;
+	border-radius:40px;
+	width:99%;	
+	margin-left: auto;
+	margin-right: auto;
+	height: 80px;
+	background: linear-gradient(141deg, #FF0000 0%, #FF1616 51%, #EE9587 90%);
+}
 
+.logo{
+	float: left;
+	margin-left: 5%;	
+}
+
+.menu{
+	float: right;
+	margin-right: 5%;
+}
+.menu ul{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	margin-top: 30px;
+}
+
+.menu ul li{
+	float: left;
+}
+
+.menu ul li a{
+	color: #000;
+	text-decoration: none;
+	margin-left: 10px;
+	margin-right: 10px;
+}
 
 
 .footer{
@@ -174,7 +208,6 @@ div.top{
     	display: block;
     	font-size: 10px;
     	width: 50%;
-    	
      }
 }
 
