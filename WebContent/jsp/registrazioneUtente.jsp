@@ -9,7 +9,7 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<title>Found It! | Registrazione</title>
+	<title>Found It! | Registrazione Utente</title>
 	
 		<style>
 			.alert {
@@ -41,11 +41,11 @@
 
 		<div id="containerSuperiore">
 		<div class="top">
-				<h2><center>REGISTRAZIONE</center></h2>
+				<h2><center>REGISTRAZIONE UTENTE</center></h2>
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
 		<div class="container">
-			<form name="registrazione" action="" method="POST">
+			<form name="registrazioneUtente" action="" method="POST">
 			<div style= "margin-left:4%; width:60%; float:left">
 				<br><br>
 				<div class="formelement">
