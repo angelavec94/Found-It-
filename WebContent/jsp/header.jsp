@@ -50,13 +50,13 @@
 				
 								<input type="submit" id="login" value="Conferma" style="display: block; margin-left: 25%; width: 100px;"/> 
 							</fieldset>
-							<span><a href="#">Hai dimenticato la password?</a></span>
+							<span><a href="<%=request.getContextPath()%>/jsp/recuperoPassword.jsp">Hai dimenticato la password?</a></span>
 						</form>
 					</div>
 				</div>
 			</li>
 			<li>
-				<a href="<%=request.getContextPath()%>/jsp/registrazione.jsp"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrazione</a>
+				<a href="<%=request.getContextPath()%>/jsp/registrazioneUtente.jsp"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrazione</a>
 			</li>
 		</ul>
 		</nav>
