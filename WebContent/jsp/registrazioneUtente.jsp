@@ -68,7 +68,7 @@
 
 				<div class="formelement">
 					<label  class="registra">Citta<span style="color: #FF0000">*</span></label> 
-					<input class="campi" type="text" size="40" name="citta" placeholder=" inserisci una citta"/>
+					<input id="geocomplete" class="campi" type="text" size="40" name="citta" placeholder=" inserisci una citta"/>
 					<i class="fa fa-map-marker"></i>
 				</div>
 
@@ -156,6 +156,47 @@
 	
 	
 	<%@include file="footer.jsp"%>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCofJoxoB2qURli3Js_1iUFjixonLuqk-M&sensor=false&amp;libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery.geocomplete.js"></script>
+    <script src="<%=request.getContextPath()%>/js/logger.js"></script>
 	
+		<script>
+      $(function(){
+        
+        $("#geocomplete").geocomplete()
+          .bind("geocode:result", function(event, result){
+            $.log("Result: " + result.formatted_address);
+          })
+          .bind("geocode:error", function(event, status){
+            $.log("ERROR: " + status);
+          })
+          .bind("geocode:multiple", function(event, results){
+            $.log("Multiple: " + results.length + " results found");
+          });
+        
+        $("#find").click(function(){
+          $("#geocomplete").trigger("geocode");
+        });        
+      });
+      
+  		function trovaCoordinate(){
+  			var input_address = $("#geocomplete").val();
+  			var geocoder = new google.maps.Geocoder();
+  			geocoder.geocode( { address: input_address }, function(results, status) {
+  				if (status == google.maps.GeocoderStatus.OK) {
+  					var lat = results[0].geometry.location.lat();
+  					var lng = results[0].geometry.location.lng();
+  					$("latitude").val()=lat;
+  					$("longitude").val()=lng;
+  					return true
+  					}
+  				else {
+  					alert("Indirizzo non valido!");
+  					return false
+  					}
+  				});
+  		}
+      </script>
 </body>
 </html>
