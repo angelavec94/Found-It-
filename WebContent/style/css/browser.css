@@ -44,7 +44,7 @@ section{
 	float:left;
 }
 
-select,input.campi{
+select.campi,input.campi{
 	border-radius: 7px;
 	width: 61%;
 }
