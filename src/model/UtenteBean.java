@@ -15,6 +15,8 @@ public class UtenteBean implements Cloneable {
 	private String username;
 	private String password;
 	private String tipo;
+	private String societaSportiva_PartitaIva;
+	private String numeroCarta;
 	/*
 	 * Costruttore
 	 */
@@ -30,6 +32,8 @@ public class UtenteBean implements Cloneable {
 		this.username = null;
 		this.password = null;
 		this.tipo = null;
+		this.societaSportiva_PartitaIva= null;
+		this.numeroCarta= null;
 	}
 	/*
 	 * metodi di accesso
@@ -77,6 +81,13 @@ public class UtenteBean implements Cloneable {
 	public String getTipo(){
 		return tipo;
 	}
+	
+	public String getSocietaSportiva_PartitaIva() {
+		return societaSportiva_PartitaIva;
+	}
+	public String getNumeroCarta() {
+		return numeroCarta;
+	}
 	/*
 	 * metodi modificatori
 	 */
@@ -113,14 +124,19 @@ public class UtenteBean implements Cloneable {
 	public void setTipo(String unTipo){
 		tipo = unTipo;
 	}
-
+	public void setSocietaSportiva_PartitaIva(String unaPartitaIva) {
+		societaSportiva_PartitaIva = unaPartitaIva;
+	}
+	public void setNumeroCarta(String unNumeroCarta) {
+		numeroCarta = unNumeroCarta;
+	}
 	/*
 	 * Override toString di Object
 	 */
 	public String toString(){
 		return getClass().getName()+" [nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale + ", citta="
 				+ citta + ", provincia=" + provincia + ", cap=" + cap + ", telefono=" + telefono + ", email=" + email
-				+ ", username=" + username + ", password=" + password + ", tipo=" + tipo + "]";
+				+ ", username=" + username + ", password=" + password + ", tipo=" + tipo + ", societaSportiva_PartivaIva="+societaSportiva_PartitaIva+", numero carta="+numeroCarta+"]";
 	}
 	
 	/*
@@ -130,9 +146,9 @@ public class UtenteBean implements Cloneable {
 		if (o == null) return false;
 		if (getClass() != o.getClass())return false;
 		UtenteBean ut = (UtenteBean) o;
-		return getNome().equals(ut.nome)&& getCognome().equals(ut.cognome)&& getCodiceFiscale()==ut.codiceFiscale &&
+		return getNome().equals(ut.nome)&& getCognome().equals(ut.cognome)&& getCodiceFiscale().equals(ut.codiceFiscale) &&
 			   getCitta().equals(ut.citta)&& getProvincia().equals(ut.provincia)&& getCap()==ut.cap && getTelefono().equals(ut.telefono)
-			   && getEmail().equals(ut.email)&& getUsername().equals(ut.username)&& getPassword().equals(ut.password);
+			   && getEmail().equals(ut.email)&& getUsername().equals(ut.username)&& getPassword().equals(ut.password) && getSocietaSportiva_PartitaIva().equals(ut.societaSportiva_PartitaIva)&& getNumeroCarta().equals(ut.numeroCarta);
 	}
 	/*
 	 * Override clone di Object
