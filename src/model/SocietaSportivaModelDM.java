@@ -12,7 +12,7 @@ public class SocietaSportivaModelDM implements SocietaSportivaModel {
 	public void doSave(SocietaSportivaBean societaToSave) throws SQLException {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
-		String insertSQL="INSERT INTO "+SocietaSportivaModelDM.TABLE_NAME+" (PARTITA IVA,NOME,INDIRIZZO,TEL,CODICE AUTENTICAZIONE) VALUES (?, ?, ?, ?, ?)";
+		String insertSQL="INSERT INTO "+SocietaSportivaModelDM.TABLE_NAME+" (PARTITAIVA,NOME,INDIRIZZO,TEL,CODICEAUTENTICAZIONE) VALUES (?, ?, ?, ?, ?)";
 		try{
 			connection = DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(insertSQL);
@@ -37,7 +37,7 @@ public class SocietaSportivaModelDM implements SocietaSportivaModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		int result=0;
-		String updateSQL="UPDATE "+SocietaSportivaModelDM.TABLE_NAME+" SET PARTITA IVA = ?, NOME = ?, INDIRIZZO = ?, TEL = ?, CODICE AUTENTICAZIONE = ? WHERE PARTITA IVA = ?";
+		String updateSQL="UPDATE "+SocietaSportivaModelDM.TABLE_NAME+" SET PARTITAIVA = ?, NOME = ?, INDIRIZZO = ?, TEL = ?, CODICEAUTENTICAZIONE = ? WHERE PARTITAIVA = ?";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(updateSQL);
@@ -64,18 +64,18 @@ public class SocietaSportivaModelDM implements SocietaSportivaModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		SocietaSportivaBean societa=new SocietaSportivaBean();
-		String selectSQL="SELECT * FROM "+SocietaSportivaModelDM.TABLE_NAME+" WHERE PARTITA IVA = ?";
+		String selectSQL="SELECT * FROM "+SocietaSportivaModelDM.TABLE_NAME+" WHERE PARTITAIVA = ?";
 		try{
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(selectSQL);
 			prepStat.setString(1,aPartitaIVA);
 			ResultSet rs=prepStat.executeQuery();
 			while(rs.next()){
-				societa.setPartitaIva(rs.getString("PARTITA IVA"));
+				societa.setPartitaIva(rs.getString("PARTITAIVA"));
 				societa.setNomeSocieta(rs.getString("NOME"));
 				societa.setIndirizzoSede(rs.getString("INDIRIZZO"));
 				societa.setTelefono(rs.getString("TEL"));
-				societa.setCodiceAutenticazione(rs.getString("CODICE AUTENTICAZIONE"));
+				societa.setCodiceAutenticazione(rs.getString("CODICEAUTENTICAZIONE"));
 			}
 		}finally{
 			try{

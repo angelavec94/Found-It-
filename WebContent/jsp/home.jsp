@@ -30,7 +30,7 @@
 		<hr></hr>
 
 		<div class="container">
-			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="" onsubmit="return trovaCoordinate()">
+			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController" onsubmit="return trovaCoordinate()">
 				<div class="container-form-di-ricerca-home">
 					<table>
 						<tr>

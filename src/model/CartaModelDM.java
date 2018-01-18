@@ -12,7 +12,7 @@ public class CartaModelDM implements CartaModel {
 	public void doSave(CartaBean cartaToSave) throws SQLException {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
-		String insertSQL="INSERT INTO "+CartaModelDM.TABLE_NAME+" (NUMERO CARTA,INTESTATARIO,SCADENZA,CVV/CVV2) VALUES (?, ?, ?, ?)";
+		String insertSQL="INSERT INTO "+CartaModelDM.TABLE_NAME+" (NUMEROCARTA,INTESTATARIO,SCADENZA,CVV/CVV2) VALUES (?, ?, ?, ?)";
 		try{
 			connection = DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(insertSQL);
@@ -36,7 +36,7 @@ public class CartaModelDM implements CartaModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		int result=0;
-		String updateSQL="UPDATE "+CartaModelDM.TABLE_NAME+" SET NUMERO CARTA = ?, INTESTATARIO = ?, SCADENZA = ?, CVV/CVV2 = ? WHERE NUMERO CARTA = ?";
+		String updateSQL="UPDATE "+CartaModelDM.TABLE_NAME+" SET NUMEROCARTA = ?, INTESTATARIO = ?, SCADENZA = ?, CVV/CVV2 = ? WHERE NUMEROCARTA = ?";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(updateSQL);
@@ -62,7 +62,7 @@ public class CartaModelDM implements CartaModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		int res=0;
-		String deleteSQL="DELETE FROM "+CartaModelDM.TABLE_NAME+" WHERE NUMERO CARTA = ?";
+		String deleteSQL="DELETE FROM "+CartaModelDM.TABLE_NAME+" WHERE NUMEROCARTA = ?";
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(deleteSQL);
@@ -83,14 +83,14 @@ public class CartaModelDM implements CartaModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		CartaBean carta=new CartaBean();
-		String selectSQL="SELECT * FROM "+CartaModelDM.TABLE_NAME+" WHERE NUMERO CARTA = ?";
+		String selectSQL="SELECT * FROM "+CartaModelDM.TABLE_NAME+" WHERE NUMEROCARTA = ?";
 		try{
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(selectSQL);
 			prepStat.setString(1,aNumero);
 			ResultSet rs=prepStat.executeQuery();
 			while(rs.next()){
-				carta.setNumeroCarta(rs.getString("NUMERO CARTA"));
+				carta.setNumeroCarta(rs.getString("NUMEROCARTA"));
 				carta.setIntestatario(rs.getString("INTESTATARIO"));
 				carta.setScadenza(rs.getDate("SCADENZA"));
 				carta.setCvv(rs.getInt("CVV/CVV2"));

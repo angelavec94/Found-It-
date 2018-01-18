@@ -14,7 +14,7 @@ public class CampoSportivoModelDM implements CampoSportivoModel {
 	public synchronized void doSave(CampoSportivoBean campoToSave) throws SQLException {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
-		String insertSQL="INSERT INTO "+CampoSportivoModelDM.TABLE_NAME+" (IDCAMPO SPORTIVO,NOME,FASCIA ORARIA,LUOGO,TIPOLOGIA,PREZZO ONLINE,PREZZO SUL CAMPO,SOCIETA SPORTIVA_PARTITA IVA) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String insertSQL="INSERT INTO "+CampoSportivoModelDM.TABLE_NAME+" (IDCAMPOSPORTIVO,NOME,FASCIAORARIA,LUOGO,TIPOLOGIA,PREZZOONLINE,PREZZOSULCAMPO,SOCIETASPORTIVAPARTITAIVA) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try{
 			connection = DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(insertSQL);
@@ -42,7 +42,7 @@ public class CampoSportivoModelDM implements CampoSportivoModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		int res=0;
-		String deleteSQL="DELETE FROM "+CampoSportivoModelDM.TABLE_NAME+" WHERE IDCAMPO SPORTIVO = ?";
+		String deleteSQL="DELETE FROM "+CampoSportivoModelDM.TABLE_NAME+" WHERE IDCAMPOSPORTIVO = ?";
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(deleteSQL);
@@ -63,7 +63,7 @@ public class CampoSportivoModelDM implements CampoSportivoModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		int result=0;
-		String updateSQL="UPDATE "+CampoSportivoModelDM.TABLE_NAME+" SET IDCAMPO SPORTIVO = ?, NOME = ?, FASCIA ORARIA = ?, LUOGO = ?, TIPOLOGIA = ?, PREZZO ONLINE = ?, PREZZO SUL CAMPO = ?, SOCIETA SPORTIVA_PARTITA IVA = ? WHERE IDCAMPO SPORTIVO = ?";
+		String updateSQL="UPDATE "+CampoSportivoModelDM.TABLE_NAME+" SET IDCAMPOSPORTIVO = ?, NOME = ?, FASCIAORARIA = ?, LUOGO = ?, TIPOLOGIA = ?, PREZZOONLINE = ?, PREZZOSULCAMPO = ?, SOCIETASPORTIVAPARTITAIVA = ? WHERE IDCAMPOSPORTIVO = ?";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(updateSQL);
@@ -93,21 +93,21 @@ public class CampoSportivoModelDM implements CampoSportivoModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		CampoSportivoBean campo=new CampoSportivoBean();
-		String selectSQL="SELECT * FROM "+CampoSportivoModelDM.TABLE_NAME+" WHERE IDCAMPO SPORTIVO = ?";
+		String selectSQL="SELECT * FROM "+CampoSportivoModelDM.TABLE_NAME+" WHERE IDCAMPOSPORTIVO = ?";
 		try{
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(selectSQL);
 			prepStat.setInt(1,anID);
 			ResultSet rs=prepStat.executeQuery();
 			while(rs.next()){
-				campo.setIdCampoSportivo(rs.getInt("IDCAMPO SPORTIVO"));
+				campo.setIdCampoSportivo(rs.getInt("IDCAMPOSPORTIVO"));
 				campo.setNome(rs.getString("NOME"));
-				campo.setFasciaOraria(rs.getString("FASCIA ORARIA"));
+				campo.setFasciaOraria(rs.getString("FASCIAORARIA"));
 				campo.setLuogo(rs.getString("LUOGO"));
 				campo.setTipologia(rs.getString("TIPOLOGIA"));
-				campo.setPrezzoOnline(rs.getDouble("PREZZO ONLINE"));
-				campo.setPrezzoSulCampo(rs.getDouble("PREZZO SUL CAMPO"));
-				campo.setPartitaIvaSocieta(rs.getString("SOCIETA SPORTIVA_PARTITA IVA"));
+				campo.setPrezzoOnline(rs.getDouble("PREZZOONLINE"));
+				campo.setPrezzoSulCampo(rs.getDouble("PREZZOSULCAMPO"));
+				campo.setPartitaIvaSocieta(rs.getString("SOCIETASPORTIVAPARTITAIVA"));
 			}
 		}finally{
 			try{
@@ -134,14 +134,14 @@ public class CampoSportivoModelDM implements CampoSportivoModel {
 			ResultSet rs=prepStat.executeQuery();
 			while(rs.next()){
 				CampoSportivoBean campo = new CampoSportivoBean();
-				campo.setIdCampoSportivo(rs.getInt("IDCAMPO SPORTIVO"));
+				campo.setIdCampoSportivo(rs.getInt("IDCAMPOSPORTIVO"));
 				campo.setNome(rs.getString("NOME"));
-				campo.setFasciaOraria(rs.getString("FASCIA ORARIA"));
+				campo.setFasciaOraria(rs.getString("FASCIAORARIA"));
 				campo.setLuogo(rs.getString("LUOGO"));
 				campo.setTipologia(rs.getString("TIPOLOGIA"));
-				campo.setPrezzoOnline(rs.getDouble("PREZZO ONLINE"));
-				campo.setPrezzoSulCampo(rs.getDouble("PREZZO SUL CAMPO"));
-				campo.setPartitaIvaSocieta(rs.getString("SOCIETA SPORTIVA_PARTITA IVA"));
+				campo.setPrezzoOnline(rs.getDouble("PREZZOONLINE"));
+				campo.setPrezzoSulCampo(rs.getDouble("PREZZOSULCAMPO"));
+				campo.setPartitaIvaSocieta(rs.getString("SOCIETASPORTIVAPARTITAIVA"));
 				campi.add(campo);
 			}
 		}finally{
