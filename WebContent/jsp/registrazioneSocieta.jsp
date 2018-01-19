@@ -15,7 +15,7 @@
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
 		<div class="container">
-			<form name="registrazioneSocieta" action="" method="POST">
+			<form name="registrazioneSocieta" action="<%=request.getContextPath()%>/SocietaController" method="POST">
 			<div style="margin-left:25%;width:50%;height:300px">
 				<br><br>
 				<div class="formelement">
@@ -48,6 +48,7 @@
    				</div>
 
 				<br><br><br><br>
+				<input name="CodiceFiscaleUtente" value="<%= request.getAttribute("CodiceFiscaleUtente")%>" type="hidden"/>
 				<div style="text-align:center;">
 					<button class="buttonreg" type="submit" name="submit"><b>Registra Società</b></button>
 				</div>

@@ -45,7 +45,7 @@
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
 		<div class="container">
-			<form name="registrazioneUtente" action="" method="POST">
+			<form name="registrazioneUtente" action="<%=request.getContextPath()%>/UserController" method="POST" onsubmit="return validateForm()">
 			<div style= "margin-left:4%; width:60%; float:left">
 				<br><br>
 				<div class="formelement">
@@ -62,7 +62,7 @@
 				
 				<div class="formelement">
 					<label  class="registra">Codice fiscale<span style="color: #FF0000">*</span></label>
-				 	<input class="campi" type="text" name="codiceFiscale" placeholder=" inserisci codice fiscale">
+				 	<input class="campi" type="text" name="codicefiscale" placeholder=" inserisci codice fiscale">
 				 	<i class="fa fa-user"></i>
 				</div>
 
@@ -154,13 +154,14 @@
 	   		</div>
 	</div>
 	
-	
 	<%@include file="footer.jsp"%>
+	
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCofJoxoB2qURli3Js_1iUFjixonLuqk-M&sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/jquery.geocomplete.js"></script>
     <script src="<%=request.getContextPath()%>/js/logger.js"></script>
-	
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
+		
 		<script>
       $(function(){
         
