@@ -12,7 +12,7 @@ public class CartaModelDM implements CartaModel {
 	public void doSave(CartaBean cartaToSave) throws SQLException {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
-		String insertSQL="INSERT INTO "+CartaModelDM.TABLE_NAME+" (NUMEROCARTA,INTESTATARIO,SCADENZA,CVV/CVV2) VALUES (?, ?, ?, ?)";
+		String insertSQL="INSERT INTO "+CartaModelDM.TABLE_NAME+" (NUMEROCARTA,INTESTATARIO,SCADENZA,CVVCVV2) VALUES (?, ?, ?, ?)";
 		try{
 			connection = DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(insertSQL);
@@ -36,7 +36,7 @@ public class CartaModelDM implements CartaModel {
 		Connection connection=null;
 		PreparedStatement prepStat=null;
 		int result=0;
-		String updateSQL="UPDATE "+CartaModelDM.TABLE_NAME+" SET NUMEROCARTA = ?, INTESTATARIO = ?, SCADENZA = ?, CVV/CVV2 = ? WHERE NUMEROCARTA = ?";
+		String updateSQL="UPDATE "+CartaModelDM.TABLE_NAME+" SET NUMEROCARTA = ?, INTESTATARIO = ?, SCADENZA = ?, CVVCVV2 = ? WHERE NUMEROCARTA = ?";
 		try {
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(updateSQL);
@@ -93,7 +93,7 @@ public class CartaModelDM implements CartaModel {
 				carta.setNumeroCarta(rs.getString("NUMEROCARTA"));
 				carta.setIntestatario(rs.getString("INTESTATARIO"));
 				carta.setScadenza(rs.getDate("SCADENZA"));
-				carta.setCvv(rs.getInt("CVV/CVV2"));
+				carta.setCvv(rs.getInt("CVVCVV2"));
 			}
 		}finally{
 			try{
@@ -103,6 +103,9 @@ public class CartaModelDM implements CartaModel {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
+		if(carta.getNumeroCarta()!=null)
 		return carta;
+		else
+		return null;
 	}
 }

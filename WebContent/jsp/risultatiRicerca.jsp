@@ -45,11 +45,11 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-	<%@page import="model.CampoSportivoBean,java.util.*"%>
+	<%@page import="model.CampoSportivoBean,java.util.*,model.SocietaSportivaBean,model.SocietaSportivaModel,model.SocietaSportivaModelDM"%>
  	<%	Collection<CampoSportivoBean> risultatiRicerca = (Collection<CampoSportivoBean>) request.getSession().getAttribute("risultatiRicerca");%>
 	<div id="containerSuperiore">
 		<div class="container">
-			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController" onsubmit="return trovaCoordinate()">
+			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController">
 				<div class="sideBarDiRicerca">
 					<label>Quale sport vuoi praticare?</label>
 					<select name="tipo" class="inSideBar">	
@@ -86,14 +86,35 @@
 					<img alt="fotoCampo" src="../images/userStandard.png" style="height: 100px; width: 100px; float: left;">
 					<div class="descrizioneRicerca">
 						<h3 align="center"><%=bean.getNome()%></h3>
-						<p>Il campo di gioco <%=bean.getNome()%> e' situato a <%=bean.getLuogo()%> ed il prezzo per accedere alla struttura è di <%=bean.getPrezzoOnline()%> euro.
+						<p>Il campo di gioco <%=bean.getNome()%> e' situato a <%=bean.getLuogo()%> ed il prezzo per accedere alla struttura è di <%=bean.getPrezzoSulCampo()%> euro(Prezzo scontato per prenotazioni online:<%=bean.getPrezzoOnline()%>).
 						   La struttura è aperta dalle <%=Integer.parseInt(new Integer(bean.getFasciaOraria()).toString().substring(0, 2))%> alle 
 						   <%=Integer.parseInt(new Integer(bean.getFasciaOraria()).toString().substring(2))%>.
 						</p>
-						<form name="formPrenota" method="GET" action="<%=request.getContextPath()%>/PrenotazioneCampoController">
-						<input name="idCampo" id="idCampo" value="<%=bean.getIdCampoSportivo()%>" type="hidden"/>
-						<input type="submit" value="Prenota!" style="float: right;">
-						</form>
+						<%
+							Object isLogged=request.getSession().getAttribute("utenteLoggato");
+						
+						
+							//DA RIMUOVERE////////////////////////////////////////////////////////////////
+							isLogged=true;
+							//DA RIMUOVERE////////////////////////////////////////////////////////////////
+							
+							
+							if(isLogged!=null&&(boolean)isLogged){
+						%>
+								<form name="formPrenota" method="GET" action="<%=request.getContextPath()%>/PrenotazioneCampoController">
+								<input name="idCampo" id="idCampo" value="<%=bean.getIdCampoSportivo()%>" type="hidden"/>
+								<input type="submit" value="Prenota!" style="float: right;">
+								</form>
+						<%
+							} else {
+								SocietaSportivaModel societa=new SocietaSportivaModelDM();
+								SocietaSportivaBean soc=societa.doRetrieveByKey(bean.getPartitaIvaSocieta());
+								String numTel=soc.getTelefono();
+						%>
+								<h3 style="float: right;"> Per procedere alla prenotazione online effettua il login o chiama al numero <%=numTel%>!</h3>
+						<%
+							}
+						%>
 					</div>
 				</div>
 				

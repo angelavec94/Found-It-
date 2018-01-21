@@ -70,18 +70,19 @@ public class UtenteModelDM  implements UtenteModel{
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) { 
-				utente.setNome(rs.getString("USERNAME"));
-				utente.setCognome(rs.getString("CODICEFISCALE"));
-				utente.setCodiceFiscale(rs.getString("NOME"));
-				utente.setCitta(rs.getString("COGNOME"));
+				utente.setUsername(rs.getString("USERNAME"));
+				utente.setCodiceFiscale(rs.getString("CODICEFISCALE"));
+				utente.setNome(rs.getString("NOME"));
+				utente.setCognome(rs.getString("COGNOME"));
+				utente.setCitta(rs.getString("CITTA"));
 				utente.setProvincia(rs.getString("PROVINCIA"));
 				utente.setCap(rs.getInt("CAP"));
 				utente.setTelefono(rs.getString("TEL"));
-				utente.setEmail(rs.getString("PASSWORD"));
-				utente.setUsername(rs.getString("EMAIL"));
-				utente.setPassword(rs.getString("TIPO"));
-				utente.setSocietaSportiva_PartitaIva("SOCIETASPORTIVA_PARTITAIVA");
-				utente.setNumeroCarta("CARTA_NUMEROCARTA");
+				utente.setPassword(rs.getString("PASSWORD"));
+				utente.setEmail(rs.getString("EMAIL"));
+				utente.setTipo(rs.getString("TIPO"));
+				utente.setSocietaSportiva_PartitaIva(rs.getString("SOCIETASPORTIVA_PARTITAIVA"));
+				utente.setNumeroCarta(rs.getString("CARTA_NUMEROCARTA"));
 			}
 
 		} finally {
@@ -92,7 +93,10 @@ public class UtenteModelDM  implements UtenteModel{
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
+		if(utente.getCodiceFiscale()!=null)
 		return utente;
+		else
+		return null;
 	}
 
 	@Override
@@ -107,7 +111,7 @@ public class UtenteModelDM  implements UtenteModel{
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setString(2, unCodiceFiscale);
+			preparedStatement.setString(1, unCodiceFiscale);
 
 
 			result = preparedStatement.executeUpdate();
@@ -145,18 +149,19 @@ public class UtenteModelDM  implements UtenteModel{
 			while (rs.next()) {
 				UtenteBean utente = new UtenteBean();
 				
-				utente.setNome(rs.getString("USERNAME"));
-				utente.setCognome(rs.getString("CODICEFISCALE"));
-				utente.setCodiceFiscale(rs.getString("NOME"));
-				utente.setCitta(rs.getString("COGNOME"));
+				utente.setUsername(rs.getString("USERNAME"));
+				utente.setCodiceFiscale(rs.getString("CODICEFISCALE"));
+				utente.setNome(rs.getString("NOME"));
+				utente.setCognome(rs.getString("COGNOME"));
+				utente.setCitta(rs.getString("CITTA"));
 				utente.setProvincia(rs.getString("PROVINCIA"));
 				utente.setCap(rs.getInt("CAP"));
 				utente.setTelefono(rs.getString("TEL"));
-				utente.setEmail(rs.getString("PASSWORD"));
-				utente.setUsername(rs.getString("EMAIL"));
-				utente.setPassword(rs.getString("TIPO"));
-				utente.setSocietaSportiva_PartitaIva("SOCIETASPORTIVA_PARTITAIVA");
-				utente.setNumeroCarta("CARTA_NUMEROCARTA");
+				utente.setPassword(rs.getString("PASSWORD"));
+				utente.setEmail(rs.getString("EMAIL"));
+				utente.setTipo(rs.getString("TIPO"));
+				utente.setSocietaSportiva_PartitaIva(rs.getString("SOCIETASPORTIVA_PARTITAIVA"));
+				utente.setNumeroCarta(rs.getString("CARTA_NUMEROCARTA"));
 
 				users.add(utente);
 			}
@@ -178,10 +183,7 @@ public class UtenteModelDM  implements UtenteModel{
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		
-		String updateSQL = "UPDATE " + UtenteModelDM.TABLE_NAME
-				+ " SET USERNAME=?, CODICEFISCALE=?, NOME=?, COGNOME=?, CITTA=?, PROVINCIA=?, CAP=?, TEL=?, PASSWORD=?, EMAIL=?, TIPO=?, SOCIETASPORTIVA_PARTITAIVA=?, CARTA_NUMEROCARTA=?," 
-				+ " WHERE CODICEFISCALE=?";
-
+		String updateSQL = "UPDATE "+UtenteModelDM.TABLE_NAME+" SET USERNAME = ?, CODICEFISCALE = ?, NOME = ?, COGNOME = ?, CITTA = ?, PROVINCIA = ?, CAP = ?, TEL = ?, PASSWORD = ?, EMAIL = ?, TIPO = ?, SOCIETASPORTIVA_PARTITAIVA = ?, CARTA_NUMEROCARTA = ? WHERE CODICEFISCALE = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
