@@ -48,6 +48,7 @@
 			<form name="registrazioneUtente" action="<%=request.getContextPath()%>/UserController" method="POST" onsubmit="return validateForm()">
 			<div style= "margin-left:4%; width:60%; float:left">
 				<br><br>
+				<input type="text" name="action" id="action" value="insert" style="display: none;" />
 				<div class="formelement">
 					<label  class="registra">Nome<span style="color: #FF0000">*</span></label>
 					<input class="campi" type="text" name="nome" placeholder=" inserisci nome">

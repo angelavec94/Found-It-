@@ -98,6 +98,53 @@ public class UtenteModelDM  implements UtenteModel{
 		else
 		return null;
 	}
+	
+	@Override
+	public synchronized UtenteBean doRetrieveByUsername(String unUsername) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		UtenteBean utente = new UtenteBean();
+
+		String selectSQL = "SELECT * FROM " + UtenteModelDM.TABLE_NAME + " WHERE USERNAME = ?";
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, unUsername);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) { 
+				utente.setUsername(rs.getString("USERNAME"));
+				utente.setCodiceFiscale(rs.getString("CODICEFISCALE"));
+				utente.setNome(rs.getString("NOME"));
+				utente.setCognome(rs.getString("COGNOME"));
+				utente.setCitta(rs.getString("CITTA"));
+				utente.setProvincia(rs.getString("PROVINCIA"));
+				utente.setCap(rs.getInt("CAP"));
+				utente.setTelefono(rs.getString("TEL"));
+				utente.setPassword(rs.getString("PASSWORD"));
+				utente.setEmail(rs.getString("EMAIL"));
+				utente.setTipo(rs.getString("TIPO"));
+				utente.setSocietaSportiva_PartitaIva(rs.getString("SOCIETASPORTIVA_PARTITAIVA"));
+				utente.setNumeroCarta(rs.getString("CARTA_NUMEROCARTA"));
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		if(utente.getUsername()!=null)
+		return utente;
+		else
+		return null;
+	}
+	
 
 	@Override
 	public synchronized boolean doDelete(String unCodiceFiscale) throws SQLException {

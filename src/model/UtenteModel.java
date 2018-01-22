@@ -12,5 +12,7 @@ public interface UtenteModel {
 	
 	public UtenteBean doRetrieveByKey(String unCodiceFiscale) throws SQLException;
 	
+	public UtenteBean doRetrieveByUsername(String unUsername) throws SQLException;
+	
 	public Collection<UtenteBean> doRetrieveAll(String order) throws SQLException;
 }

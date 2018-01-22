@@ -21,14 +21,17 @@
 </head>
 
 </head>
-<body>
+<body onload="showMessage()">
+    <%@page import="model.UtenteBean"%>
+	<% UtenteBean utente= (UtenteBean) request.getSession().getAttribute("login");%>
 	<header>
 	<div class="logo">
-		<a href="#"> <img alt="logo sito"
+		<a href="<%=request.getContextPath()%>/jsp/home.jsp"> <img alt="logo sito"
 			src="<%=request.getContextPath()%>/images/logoFoundIt!.png"
 			height="80px" width="180px">
 		</a>
 	</div>
+	<% if(utente==null || utente.getUsername()==null){  %>
 	<div class="menu" id="MenuResponsive">
 		<nav>
 		<ul>
@@ -37,9 +40,10 @@
 					<a href="#" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"> Login</i></a>
 					<div style="clear: both"></div>
 					<div id="loginBox">
-						<form id="loginForm" action="" method="post">
+						<form id="loginForm" action="<%=request.getContextPath()%>/UserController" method="post">
 							<fieldset id="body">
 								<fieldset>
+								<input type="text" name="action" id="action" value="login" style="display: none;" />
 									<label for="email">Username</label> 
 									<input type="text" name="username" id="username" />
 								</fieldset>
@@ -61,6 +65,25 @@
 		</ul>
 		</nav>
 	</div>
+	<% }else{ %>
+		<div class="menu" id="MenuResponsive" >
+			<nav>
+				<ul>
+					<li>
+						<div id="loginContainer">
+               				<a href="<%=request.getContextPath()%>" id="logoutButton"><i class="fa fa-sign-out" aria-hidden="true"> Logout</i></a>
+                			<div style="clear:both"></div>
+           				</div>
+					</li>
+					<li><a href="<%=request.getContextPath()%>/jsp/profiloUtente.jsp"><i class="fa fa-user" aria-hidden="true"></i> <%=utente.getUsername()%></a></li>
+					<% if(utente.getTipo().equals("moderatore")){%>
+					<li><a href="<%=request.getContextPath()%>/jsp/paginaModeratore.jsp"><i class="fa fa-info-circle" aria-hidden="true"></i> Opzioni Moderatore</a></li>
+					<%}%>
+
+				</ul>
+			</nav>
+		</div>	
+		<% } %>
 	</header>
 
 </body>

@@ -5,17 +5,21 @@ import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.UtenteBean;
 import model.UtenteModel;
 import model.UtenteModelDM;
 import model.SocietaSportivaModelDM;
+import model.PrenotazioneBean;
 import model.SocietaSportivaModel;
 import util.ValidationUtil;
 
@@ -51,7 +55,9 @@ public class UserController extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		UtenteBean utente = new UtenteBean();
-		
+		String action = request.getParameter("action");
+		// INSERT
+		if (action.equalsIgnoreCase("insert")) {
 		// Copio tutti i parametri di input nelle variabili locali
 				String nome = request.getParameter("nome");
 				String cognome = request.getParameter("cognome");
@@ -179,9 +185,62 @@ public class UserController extends HttpServlet {
 					 request.getRequestDispatcher("/jsp/registrazioneSocieta.jsp").forward(request, response);
 					
 				}
-				
+		     }
+
+					// LOGIN
+					if (action.equalsIgnoreCase("login")) {
+						String username= request.getParameter("username");
+						String password= request.getParameter("password");
+						String cryptedPassword = toSHA1(password.getBytes());
+						String redirectedPage;
 					
-			}
+						try {
+							utente= modelUtente.doRetrieveByUsername(username);
+							redirectedPage= "/jsp/home.jsp";
+							
+							if(utente == null || utente.getUsername() == null ){
+								String message = "Username errato oppure inesistente!";
+								request.getSession().setAttribute("message", message);
+								response.sendRedirect(request.getContextPath() + redirectedPage);
+							}
+							else if(utente.getPassword().equals(cryptedPassword)){
+								HttpSession session = request.getSession(true);
+								session.setAttribute("login",utente);
+								String message = "Ehy "+utente.getUsername()+", Benvenuto in Found It!";
+								request.getSession().setAttribute("message", message);
+								if(utente.getTipo().equals("admin")){
+									request.getSession().setAttribute("adminRoles", new Boolean(true));
+									redirectedPage = "/jsp/paginaAdmin.jsp";
+									response.sendRedirect(request.getContextPath() + redirectedPage);
+									}
+								else if(utente.getTipo().equals("bannato")){
+									message="Utente bannato! Contattare l'amministratore";
+									request.getSession().setAttribute("message", message);
+									redirectedPage = "/jsp/home.jsp";
+									response.sendRedirect(request.getContextPath() + redirectedPage);	
+									session.invalidate();
+								}
+								else{
+									response.sendRedirect(request.getContextPath() + redirectedPage);
+								}
+
+							}
+							else{
+								String message = "Password errata!";
+								request.getSession().setAttribute("message", message);
+								response.sendRedirect(request.getContextPath() + redirectedPage);
+
+							}
+							
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+						
+						
+					
+					}
+	}
 			
 	
 	
