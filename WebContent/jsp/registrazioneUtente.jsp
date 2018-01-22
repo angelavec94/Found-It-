@@ -107,13 +107,13 @@
 
 				<div class="formelement">
 					<label  class="registra">Password<span style="color: #FF0000">*</span></label>
-				 	<input	class="campi" type="password" name="password" placeholder=" lunghezza minima 8(almeno 1 minuscolo e maiuscolo)">
+				 	<input	class="campi" type="password" name="password" placeholder=" lunghezza minima 8(almeno 1 minuscolo,maiuscolo e numero)">
 				 	<i class="fa fa-lock"></i>	  
 				</div>
 
 				<div class="formelement">
 					<label  class="registra" for="password">Conferma password<span style="color: #FF0000">*</span></label>
-					<input class="campi" type="password" name="confpassword" placeholder=" inserisci password">
+					<input class="campi" type="password" name="confpassword" placeholder=" Conferma la password">
 				 	<i class="fa fa-lock"></i>
 				</div>
 			
@@ -156,48 +156,7 @@
 	
 	<%@include file="footer.jsp"%>
 	
-	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCofJoxoB2qURli3Js_1iUFjixonLuqk-M&sensor=false&amp;libraries=places"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/jquery.geocomplete.js"></script>
-    <script src="<%=request.getContextPath()%>/js/logger.js"></script>
 	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 		
-		<script>
-      $(function(){
-        
-        $("#geocomplete").geocomplete()
-          .bind("geocode:result", function(event, result){
-            $.log("Result: " + result.formatted_address);
-          })
-          .bind("geocode:error", function(event, status){
-            $.log("ERROR: " + status);
-          })
-          .bind("geocode:multiple", function(event, results){
-            $.log("Multiple: " + results.length + " results found");
-          });
-        
-        $("#find").click(function(){
-          $("#geocomplete").trigger("geocode");
-        });        
-      });
-      
-  		function trovaCoordinate(){
-  			var input_address = $("#geocomplete").val();
-  			var geocoder = new google.maps.Geocoder();
-  			geocoder.geocode( { address: input_address }, function(results, status) {
-  				if (status == google.maps.GeocoderStatus.OK) {
-  					var lat = results[0].geometry.location.lat();
-  					var lng = results[0].geometry.location.lng();
-  					$("latitude").val()=lat;
-  					$("longitude").val()=lng;
-  					return true
-  					}
-  				else {
-  					alert("Indirizzo non valido!");
-  					return false
-  					}
-  				});
-  		}
-      </script>
 </body>
 </html>

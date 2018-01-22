@@ -15,7 +15,7 @@
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
 		<div class="container">
-			<form name="registrazioneSocieta" action="<%=request.getContextPath()%>/SocietaController" method="POST">
+			<form name="registrazioneSocieta" action="<%=request.getContextPath()%>/SocietaController" method="POST" onsubmit="return validateSocieta()">
 			<div style="margin-left:25%;width:50%;height:300px">
 				<br><br>
 				<div class="formelement">
@@ -63,6 +63,7 @@
 	
 	
 	<%@include file="footer.jsp"%>
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 
 </body>
 </html>

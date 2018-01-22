@@ -6,7 +6,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,6 @@ import model.UtenteModel;
 import model.UtenteModelDM;
 import model.SocietaSportivaModelDM;
 import model.SocietaSportivaModel;
-import model.SocietaSportivaBean;
 import util.ValidationUtil;
 
 /**
@@ -179,27 +177,7 @@ public class UserController extends HttpServlet {
 					}
 					 request.setAttribute("CodiceFiscaleUtente", utente.getCodiceFiscale());
 					 request.getRequestDispatcher("/jsp/registrazioneSocieta.jsp").forward(request, response);
-					 //RequestDispatcher dispatcher= getServletContext().getRequestDispatcher("/jsp/registrazioneSocieta.jsp");	
-					//dispatcher.forward(request, response);
-					/*Secondo andrea è tutto inutile
-					 * SocietaSportivaBean societa = new SocietaSportivaBean();
 					
-					// Copio tutti i parametri di input nelle variabili locali
-					String nomeSocieta= request.getParameter("nomeSocieta");
-					String indirizzoSede= request.getParameter("indirizzoSede");
-					String partitaIva= request.getParameter("partitaIva");
-					String telefonoSocieta= request.getParameter("telefono");
-					String codiceAutenticazione= request.getParameter("codiceAutenticazione");
-					utente.setSocietaSportiva_PartitaIva(partitaIva);
-					
-					societa.setNomeSocieta(nomeSocieta);
-					try {
-						modelUtente.doSave(utente);
-						modelSocieta.doSave(societa);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
 				}
 				
 					

@@ -10,7 +10,11 @@ public static final String REGEX_EMAIL = "^[a-zA-Z0-9_.-]+@[a-zA-Z_]+?.[a-zA-Z]{
 public static final String REGEX_USERNAME = "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
 public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9$@$!%*?&]{8,30}";
 public static final String REGEX_CODICE_FISCALE= "/[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]/";
-	
+public static final String REGEX_NOME_SOCIETA="^(?=.{3,25}$)^[A-Za-zèùàòé][a-zA-Z'èùàòé .]*$";
+public static final String REGEX_INDIRIZZO_SEDE="^(?=.{3,25}$)^[A-Za-zèùàòéZ0-9,-.° ]*$";
+public static final String REGEX_PARTITA_IVA= "^[0-9]{11}$";
+public static final String REGEX_CODICE_AUTENTICAZIONE="^[0-9]{0,24}$";
+
 public static boolean isEmpty(String aString){
 	if (aString == null || aString == "" || aString.trim() == ""){
 		return true;

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import model.SocietaSportivaModelDM;
 import model.UtenteBean;
 import model.UtenteModel;
 import model.UtenteModelDM;
+import util.ValidationUtil;
 
 /**
  * Servlet implementation class SocietaController
@@ -44,15 +46,15 @@ public class SocietaController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String codiceFiscale= request.getParameter("CodiceFiscaleUtente");
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String codiceFiscale= request.getParameter("CodiceFiscaleUtente");
 		 UtenteBean utente = new UtenteBean();
-
-		 System.out.println(codiceFiscale);
 		 try {
 			utente= modelUtente.doRetrieveByKey(codiceFiscale);
-		} catch (SQLException e) {
+		 }catch (SQLException e) {
 			e.printStackTrace();
-			
+		  }
 			 SocietaSportivaBean societa = new SocietaSportivaBean();
 			
 			// Copio tutti i parametri di input nelle variabili locali
@@ -62,6 +64,39 @@ public class SocietaController extends HttpServlet {
 			String telefonoSocieta= request.getParameter("telefono");
 			String codiceAutenticazione= request.getParameter("codiceAutenticazione");
 			
+			if( ValidationUtil.isEmpty(nomeSocieta) || !ValidationUtil.isAValidString(nomeSocieta,ValidationUtil.REGEX_NOME_SOCIETA)){
+				out.println("<script type=\"text/javascript\">");
+			    out.println("alert('Errore: nome Società non inserito oppure non valido!');");
+			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
+			    out.println("</script>");
+			}
+			 if( ValidationUtil.isEmpty(indirizzoSede) || !ValidationUtil.isAValidString(indirizzoSede,ValidationUtil.REGEX_INDIRIZZO_SEDE)){
+				out.println("<script type=\"text/javascript\">");
+			    out.println("alert('Errore: indirizzo sede non inserito oppure non valido!');");
+			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
+			    out.println("</script>");
+			}
+			if( ValidationUtil.isEmpty(partitaIva) || !ValidationUtil.isAValidString(partitaIva,ValidationUtil.REGEX_PARTITA_IVA)){
+					out.println("<script type=\"text/javascript\">");
+				    out.println("alert('Errore: partita iva non inserita oppure non valida!');");
+				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
+				    out.println("</script>");
+				}
+			 if( ValidationUtil.isEmpty(telefonoSocieta) || !ValidationUtil.isAValidString(telefonoSocieta,ValidationUtil.REGEX_TELEFONO)){
+				out.println("<script type=\"text/javascript\">");
+			    out.println("alert('Errore: telefono non inserito oppure non valido!');");
+			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
+			    out.println("</script>");
+			}
+			 if( ValidationUtil.isEmpty(codiceAutenticazione) || !ValidationUtil.isAValidString(codiceAutenticazione,ValidationUtil.REGEX_CODICE_AUTENTICAZIONE)){
+				out.println("<script type=\"text/javascript\">");
+			    out.println("alert('Errore: Codice di Autenticazione non inserito oppure non valido!');");
+			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
+			    out.println("</script>");
+			}
+			
+			
+			
 			utente.setSocietaSportiva_PartitaIva(partitaIva);
 			
 			societa.setNomeSocieta(nomeSocieta);
@@ -69,7 +104,7 @@ public class SocietaController extends HttpServlet {
 			societa.setPartitaIva(partitaIva);
 			societa.setTelefono(telefonoSocieta);
 			societa.setCodiceAutenticazione(codiceAutenticazione);
-			System.out.println(societa);
+			
 				try {
 					modelSocieta.doSave(societa);
 					modelUtente.doUpdate(utente);
@@ -77,11 +112,7 @@ public class SocietaController extends HttpServlet {
 					e1.printStackTrace();
 				}
 				response.sendRedirect(request.getContextPath() + "/jsp/home.jsp");
-
-			
-			
-			
+	
 		}
-	}
 
 }
