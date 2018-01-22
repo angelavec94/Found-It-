@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -16,11 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import model.CampoSportivoBean;
 import model.CampoSportivoModel;
 import model.CampoSportivoModelDM;
+import model.PrenotazioneBean;
+import model.PrenotazioneModel;
+import model.PrenotazioneModelDM;
 
 @WebServlet("/RicercaController")
 public class RicercaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static CampoSportivoModel model = new CampoSportivoModelDM();
+	static CampoSportivoModel modelCampo = new CampoSportivoModelDM();
+	static PrenotazioneModel modelPre = new PrenotazioneModelDM();
 	
     public RicercaController() {
         super();
@@ -42,19 +47,42 @@ public class RicercaController extends HttpServlet {
 		System.out.println("I parametri passati sono: tipo="+tipo+",luogo="+luogo+",data="+data+",ora="+ora+",minuti="+minuti+"latitudine="+lat+",longitudine="+lng);
 		
 		try {
-			Collection<?> campi = model.doRetrieveAll("tipologia");
+			Collection<?> campi = modelCampo.doRetrieveAll("tipologia");
 				if (campi != null && campi.size() != 0) {
 					Iterator<?> it = campi.iterator();
 					while (it.hasNext()) {
 						CampoSportivoBean campo = (CampoSportivoBean) it.next();
-						int oraInizio=Integer.parseInt(new Integer(campo.getFasciaOraria()).toString().substring(0, 2));
-						int oraFine=Integer.parseInt(new Integer(campo.getFasciaOraria()).toString().substring(2));
-						if(campo.getTipologia().equals(tipo) && ora>=oraInizio && ora <=oraFine ){
-							risultatiRicerca.add(campo);
+						String[] fascia=campo.getFasciaOraria().split("-");
+						int oraInizio=Integer.parseInt(fascia[0]);
+						System.out.println(oraInizio);
+						int oraFine=Integer.parseInt(fascia[1]);
+						
+						Collection<PrenotazioneBean> prenotazioni=modelPre.doRetrieveAll("");
+						
+						if(campo.getTipologia().equals(tipo) && ora>=oraInizio && ora <=oraFine && campo.getLuogo().equals(luogo)){
+							if(prenotazioni == null || prenotazioni.size()==0){
+								risultatiRicerca.add(campo);
+							}
+							else{
+								Iterator<PrenotazioneBean> ite=prenotazioni.iterator();
+								boolean ok=true;
+								while(ite.hasNext()){
+									PrenotazioneBean pr=(PrenotazioneBean)ite.next();
+									long oraInMs=(((ora-1)*60)*60)*1000;
+									if(pr.getIdCampoSportivo()==campo.getIdCampoSportivo() && pr.getData().compareTo(Date.valueOf(data))==0 && pr.getOra().getTime()==oraInMs){
+										ok=false;
+									}
+								}
+								if(ok){
+									risultatiRicerca.add(campo);
+								}
+							}
+							
 						}
 					}
 					request.getSession().setAttribute("risultatiRicerca", risultatiRicerca);
 					request.getSession().setAttribute("oraPrenotazione", ora);
+					request.getSession().setAttribute("dataPrenotazione", data);
 					response.sendRedirect(request.getContextPath()+"/jsp/risultatiRicerca.jsp");
 				}
 		

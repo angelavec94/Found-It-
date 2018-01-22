@@ -13,6 +13,7 @@ public class PrenotazioneBean implements Cloneable{
 	private int idCampoSportivo;
 	private boolean saldata;
 	private String tipo;
+	private String codiceFiscaleUtente;
 	/*
 	 * Costruttore
 	 */
@@ -23,6 +24,7 @@ public class PrenotazioneBean implements Cloneable{
 		this.ora=null;
 		this.saldata= false;
 		this.tipo= null;
+		this.codiceFiscaleUtente = null;
 	}
 	/*
 	 * metodi di accesso
@@ -45,6 +47,10 @@ public class PrenotazioneBean implements Cloneable{
 	public String getTipo(){
 		return tipo;
 	}
+	
+	public String getCodiceFiscaleUtente(){
+		return codiceFiscaleUtente;
+	}
 	/*
 	 * metodi modificatori
 	 */
@@ -66,12 +72,15 @@ public class PrenotazioneBean implements Cloneable{
 	public void setTipo(String unTipo){
 		tipo = unTipo;
 	}
+	public void setCodiceFiscaleUtente(String unCodice){
+		codiceFiscaleUtente=unCodice;
+	}
 	/*
 	 * Override toString di Object
 	 */
 	public String toString() {
 		return getClass().getName()+"[data=" + data + ", ora=" + ora + ", idPrenotazione=" + idPrenotazione
-				+ ", idCampoSportivo=" + idCampoSportivo + ", saldata=" + saldata + ", tipo=" + tipo + "]";
+				+ ", idCampoSportivo=" + idCampoSportivo + ", saldata=" + saldata + ", tipo=" + tipo + ", codFiscUtente=" + codiceFiscaleUtente + "]";
 	}
 	/* 
 	 * Override equals di Object
@@ -81,7 +90,8 @@ public class PrenotazioneBean implements Cloneable{
 		if (getClass() != o.getClass())return false;
 		PrenotazioneBean pre = (PrenotazioneBean) o;
 		return getData().equals(pre.data)&& getOra().equals(pre.ora)&& getIdPrenotazione()==pre.idPrenotazione &&
-			   getIdCampoSportivo()== pre.idCampoSportivo&& isSaldata()==pre.saldata && getTipo().equals(pre.tipo);
+			   getIdCampoSportivo()== pre.idCampoSportivo&& isSaldata()==pre.saldata && getTipo().equals(pre.tipo)
+			   && getCodiceFiscaleUtente().equals(pre.codiceFiscaleUtente);
 	}
 	/*
 	 * Override clone di Object

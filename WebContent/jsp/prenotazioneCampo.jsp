@@ -72,7 +72,13 @@
 						CartaBean car=carta.doRetrieveByKey(pezzotto.getNumeroCarta());
 						if(car!=null){
 							%>
-							<form name="formPrenotaOnline" method="GET" action="">
+							<form name="formPrenotaOnline" method="GET" action="<%=request.getContextPath()%>/ConfermaPrenotazioneController">
+							<input name="cfUtente" value="<%=pezzotto.getCodiceFiscale() %>" type="hidden"/>
+							<input name="idCampo" value="<%=bean.getIdCampoSportivo() %>" type="hidden"/>
+							<input name="oraPrenotazione" value="<%=request.getSession().getAttribute("oraPrenotazione") %>" type="hidden"/>
+							<input name="dataPrenotazione" value="<%=request.getSession().getAttribute("dataPrenotazione") %>" type="hidden"/>
+							<input name="saldata" value="<%="true" %>" type="hidden"/>
+							<input name="tipo" value="<%="Online" %>" type="hidden"/>
 							<input type="submit" value="Conferma Prenotazione">
 							</form>
 							<%

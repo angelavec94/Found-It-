@@ -86,9 +86,10 @@
 					<img alt="fotoCampo" src="../images/userStandard.png" style="height: 100px; width: 100px; float: left;">
 					<div class="descrizioneRicerca">
 						<h3 align="center"><%=bean.getNome()%></h3>
+						<%String[] fascia=bean.getFasciaOraria().split("-"); %>
 						<p>Il campo di gioco <%=bean.getNome()%> e' situato a <%=bean.getLuogo()%> ed il prezzo per accedere alla struttura è di <%=bean.getPrezzoSulCampo()%> euro(Prezzo scontato per prenotazioni online:<%=bean.getPrezzoOnline()%>).
-						   La struttura è aperta dalle <%=Integer.parseInt(new Integer(bean.getFasciaOraria()).toString().substring(0, 2))%> alle 
-						   <%=Integer.parseInt(new Integer(bean.getFasciaOraria()).toString().substring(2))%>.
+						   La struttura è aperta dalle <%=fascia[0]%> alle 
+						   <%=fascia[1]%>.
 						</p>
 						<%
 							Object isLogged=request.getSession().getAttribute("utenteLoggato");

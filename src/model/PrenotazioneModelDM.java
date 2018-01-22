@@ -1,11 +1,9 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -18,18 +16,18 @@ public class PrenotazioneModelDM implements PrenotazioneModel{
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String insertSQL = "INSERT INTO " + PrenotazioneModelDM.TABLE_NAME
-				+ " (DATA, ORA, IDPRENOTAZIONE, IDCAMPOSPORTIVO, SALDATA, TIPO) VALUES (?, ?, ?, ?, ?, ?)";
+		String insertSQL = "INSERT INTO "+PrenotazioneModelDM.TABLE_NAME+" (IDPRENOTAZIONE,DATA,ORA,SALDATA,TIPO,CAMPOSPORTIVOIDCAMPOSPORTIVO,UTENTECODICEFISCALE) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setDate(1, prenotazioneToSave.getData());
-			preparedStatement.setTime(2, prenotazioneToSave.getOra());
-			preparedStatement.setInt(3, prenotazioneToSave.getIdPrenotazione());
-			preparedStatement.setInt(4, prenotazioneToSave.getIdCampoSportivo());
-			preparedStatement.setBoolean(5, prenotazioneToSave.isSaldata());
-			preparedStatement.setString(6, prenotazioneToSave.getTipo());
+			preparedStatement.setInt(1, prenotazioneToSave.getIdPrenotazione());
+			preparedStatement.setDate(2, prenotazioneToSave.getData());
+			preparedStatement.setTime(3, prenotazioneToSave.getOra());
+			preparedStatement.setBoolean(4, prenotazioneToSave.isSaldata());
+			preparedStatement.setString(5, prenotazioneToSave.getTipo());
+			preparedStatement.setInt(6, prenotazioneToSave.getIdCampoSportivo());
+			preparedStatement.setString(7, prenotazioneToSave.getCodiceFiscaleUtente());
 
 			preparedStatement.executeUpdate();
 
@@ -47,27 +45,25 @@ public class PrenotazioneModelDM implements PrenotazioneModel{
 	}
 
 	@Override
-	public boolean doUpdate(PrenotazioneBean prenotazioneToUpdate, Date oldData, Time oldTime) throws SQLException {
+	public boolean doUpdate(PrenotazioneBean prenotazioneToUpdate) throws SQLException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		
-		String updateSQL = "UPDATE" + PrenotazioneModelDM.TABLE_NAME
-				+ " SET DATA = ?, ORA = ?, IDPRENOTAZIONE = ?, IDCAMPOSPORTIVO = ?, SALDATA=?, TIPO =?,"
-				+ " WHERE DATA = ? AND ORA = ? AND IDPRENOTAZIONE = ? AND IDCAMPOSPORTIVO = ?";
+		String updateSQL = "UPDATE "+PrenotazioneModelDM.TABLE_NAME+" SET IDPRENOTAZIONE = ?, DATA = ?, ORA = ?, SALDATA = ?, TIPO = ?, CAMPOSPORTIVOIDCAMPOSPORTIVO = ?, UTENTECODICEFISCALE = ? WHERE IDPRENOTAZIONE = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
-			preparedStatement = connection.prepareStatement(updateSQL);
-			preparedStatement.setDate(1, prenotazioneToUpdate.getData());
-			preparedStatement.setTime(2, prenotazioneToUpdate.getOra());
-			preparedStatement.setInt(3, prenotazioneToUpdate.getIdPrenotazione());
-			preparedStatement.setInt(4, prenotazioneToUpdate.getIdCampoSportivo());
-			preparedStatement.setDate(5, oldData);
-			preparedStatement.setTime(6, oldTime);
-			preparedStatement.setInt(7, prenotazioneToUpdate.getIdPrenotazione());
-			preparedStatement.setInt(8, prenotazioneToUpdate.getIdCampoSportivo());
+			preparedStatement=connection.prepareStatement(updateSQL);
+			preparedStatement.setInt(1, prenotazioneToUpdate.getIdPrenotazione());
+			preparedStatement.setDate(2, prenotazioneToUpdate.getData());
+			preparedStatement.setTime(3, prenotazioneToUpdate.getOra());
+			preparedStatement.setBoolean(4, prenotazioneToUpdate.isSaldata());
+			preparedStatement.setString(5, prenotazioneToUpdate.getTipo());
+			preparedStatement.setInt(6, prenotazioneToUpdate.getIdCampoSportivo());
+			preparedStatement.setString(7, prenotazioneToUpdate.getCodiceFiscaleUtente());
+			preparedStatement.setInt(8, prenotazioneToUpdate.getIdPrenotazione());
 			
 			result = preparedStatement.executeUpdate();
 
@@ -85,13 +81,13 @@ public class PrenotazioneModelDM implements PrenotazioneModel{
 	}
 
 	@Override
-	public Collection<PrenotazioneBean> doRetrieveAll(String username, String order) throws SQLException {
+	public Collection<PrenotazioneBean> doRetrieveAll(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Collection<PrenotazioneBean> prenotazioni = new LinkedList<PrenotazioneBean>();
 
-		String selectSQL = "SELECT * FROM " + PrenotazioneModelDM.TABLE_NAME +"WHERE IDPRENOTAZIONE = ?";
+		String selectSQL = "SELECT * FROM " + PrenotazioneModelDM.TABLE_NAME;
 
 		if (order != null && !order.equals("")) {
 			selectSQL += " ORDER BY " + order;
@@ -100,17 +96,19 @@ public class PrenotazioneModelDM implements PrenotazioneModel{
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setString(1, username);
 
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				PrenotazioneBean prenotazione = new PrenotazioneBean();
 
+				prenotazione.setIdPrenotazione(rs.getInt("IDPRENOTAZIONE"));
 				prenotazione.setData(rs.getDate("DATA"));
 				prenotazione.setOra(rs.getTime("ORA"));
-				prenotazione.setIdPrenotazione(rs.getInt("IDPRENOTAZIONE"));
-				prenotazione.setIdCampoSportivo(rs.getInt("IDCAMPOSPORTIVO"));
+				prenotazione.setSaldata(rs.getBoolean("SALDATA"));
+				prenotazione.setTipo(rs.getString("TIPO"));
+				prenotazione.setIdCampoSportivo(rs.getInt("CAMPOSPORTIVOIDCAMPOSPORTIVO"));
+				prenotazione.setCodiceFiscaleUtente(rs.getString("UTENTECODICEFISCALE"));
 				
 				prenotazioni.add(prenotazione);
 			}
