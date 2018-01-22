@@ -236,9 +236,18 @@ public class UserController extends HttpServlet {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}	
-						
-						
+					}
 					
+					// LOGOUT
+					if (action.equalsIgnoreCase("logout")) {
+						 String message = "Logout effettuato con successo!";
+							request.getSession().setAttribute("message", message);
+					        
+							HttpSession session=request.getSession();  
+							String redirectedPage = "/jsp/home.jsp";
+							response.sendRedirect(request.getContextPath() + redirectedPage);	
+							session.invalidate();
+							 out.close();
 					}
 	}
 			

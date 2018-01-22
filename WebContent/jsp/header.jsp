@@ -71,13 +71,18 @@
 				<ul>
 					<li>
 						<div id="loginContainer">
-               				<a href="<%=request.getContextPath()%>" id="logoutButton"><i class="fa fa-sign-out" aria-hidden="true"> Logout</i></a>
+               				<a href="<%=request.getContextPath()%>/UserController?action=logout" id="logoutButton"><i class="fa fa-sign-out" aria-hidden="true"> Logout</i></a>
+                			
+                			
                 			<div style="clear:both"></div>
            				</div>
 					</li>
 					<li><a href="<%=request.getContextPath()%>/jsp/profiloUtente.jsp"><i class="fa fa-user" aria-hidden="true"></i> <%=utente.getUsername()%></a></li>
 					<% if(utente.getTipo().equals("moderatore")){%>
 					<li><a href="<%=request.getContextPath()%>/jsp/paginaModeratore.jsp"><i class="fa fa-info-circle" aria-hidden="true"></i> Opzioni Moderatore</a></li>
+					<%}%>
+					<% if(utente.getTipo().equals("partnerSportivo")){%>
+					<li><a href="<%=request.getContextPath()%>/jsp/aggiungiCampo.jsp"><i class="fa fa-info-circle" aria-hidden="true"></i> Aggiungi Campo</a></li>
 					<%}%>
 
 				</ul>
