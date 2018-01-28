@@ -18,12 +18,19 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js?ver=1.4.2"></script>
 <script src="<%=request.getContextPath()%>/js/login.js"></script>
-</head>
 
+<% String messaggio=(String)request.getSession().getAttribute("message");
+			if(messaggio==null || messaggio.equals("") ){
+				messaggio=(String)request.getAttribute("message");
+			}
+	%>
 </head>
-<body onload="showMessage()">
-    <%@page import="model.UtenteBean"%>
-	<% UtenteBean utente= (UtenteBean) request.getSession().getAttribute("login");%>
+<body <% if(messaggio!=null && !messaggio.equals("") ) { %>onload="showMessage()" <%}%>>
+    <%@page import="model.UtenteBean"
+            import="model.SocietaSportivaBean"%>
+	<% String message="";
+	   UtenteBean utente= (UtenteBean) request.getSession().getAttribute("login");
+	   SocietaSportivaBean societa= (SocietaSportivaBean) request.getSession().getAttribute("societa");%>
 	<header>
 	<div class="logo">
 		<a href="<%=request.getContextPath()%>/jsp/home.jsp"> <img alt="logo sito"
@@ -78,6 +85,8 @@
            				</div>
 					</li>
 					<li><a href="<%=request.getContextPath()%>/jsp/profiloUtente.jsp"><i class="fa fa-user" aria-hidden="true"></i> <%=utente.getUsername()%></a></li>
+					<li><a href="<%=request.getContextPath()%>/jsp/contattiModeratore.jsp"><i class="fa fa-phone" aria-hidden="true"></i> Contatti Moderatore</a></li>
+					
 					<% if(utente.getTipo().equals("moderatore")){%>
 					<li><a href="<%=request.getContextPath()%>/jsp/paginaModeratore.jsp"><i class="fa fa-info-circle" aria-hidden="true"></i> Opzioni Moderatore</a></li>
 					<%}%>
@@ -90,6 +99,20 @@
 		</div>	
 		<% } %>
 	</header>
+	<script>
+	
+		function showMessage() {
+	    // Get the snackbar DIV
+	    	var x = document.getElementById("snackbar")
+			
+	    // Add the "show" class to DIV
+	    x.className = "show";
 
+	    // After 3 seconds, remove the show class from DIV
+	    	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+		}
+		</script>
+	<div id="snackbar"><%= messaggio%></div>
 </body>
+<% messaggio= "";%>
 </html>
