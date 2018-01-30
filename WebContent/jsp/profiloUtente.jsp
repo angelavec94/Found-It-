@@ -25,6 +25,7 @@
 </head>
 <body>
 	<%@include file="header.jsp"%>
+	<%@page import="model.PrenotazioneBean,java.util.*,model.PrenotazioneModel,model.PrenotazioneModelDM"%>
 	<% if(utente==null || utente.getUsername() == null){
 		ServletContext sc = getServletContext();
 		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
@@ -33,7 +34,7 @@
 		rd.forward(request, response);
 	}
 	%>
-	<div id="containerSuperiore">
+	<div id="containerSuperiore" style="overflow:auto">
 		<div class="top">
 			<h2><center> PROFILO <label style="text-transform: uppercase;"><%= utente.getTipo() %></label></center></h2>
 		</div>
@@ -194,7 +195,44 @@
 
 	        <div align="center" id="Prenotazioni" class="tabcontent">
 			<h2>Prenotazioni Effettuate</h2>
-  				
+  				<div id="containerSuperiore" style="overflow:auto">
+			<div class="containerRisultati">
+				<% 
+					PrenotazioneModel model=new PrenotazioneModelDM();
+					
+					Collection<PrenotazioneBean> prenotazioni=model.doRetrieveByCodiceFiscale(utente.getCodiceFiscale());
+					if (prenotazioni != null && prenotazioni.size() != 0) {
+						Iterator<PrenotazioneBean> it = prenotazioni.iterator();
+						while (it.hasNext()) {
+							PrenotazioneBean bean = (PrenotazioneBean) it.next();
+				%>
+				<div class="elementoDellaRicerca">
+					<div class="descrizioneRicerca">
+						<h3 align="center">Prenotazione del <%=bean.getData()%> alle <%=bean.getOra()%> </h3>
+						<p>
+						Saldata: <%if(bean.isSaldata()){%> Si <%} else {%> No <%}%>
+						Tipo: <%=bean.getTipo()%>
+						</p>
+						<form name="formRimuoviPrenotazione" method="GET" action="<%=request.getContextPath()%>/RimuoviPrenotazioneController">
+							<input name="idPrenotazione" value="<%=bean.getIdPrenotazione()%>" type="hidden"/>
+							<input name="idCampo" value="<%=bean.getIdCampoSportivo() %>" type="hidden"/>
+							<input name="action" value="deleteByUtente" type="hidden"/>
+							<input type="submit" value="Rimuovi Prenotazione" style="">
+						</form>
+					</div>
+				</div>
+				
+				<%
+						}
+					} else {
+				%>
+					<h1>Non ci sono prenotazioni registrate.</h1>
+				
+				<%
+				}
+				%>
+			</div>
+		</div>
   				
         		   		
 			</div>

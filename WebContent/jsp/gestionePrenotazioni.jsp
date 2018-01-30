@@ -34,7 +34,7 @@
 <body>
 <%@include file="header.jsp"%>
 <%@page import="model.PrenotazioneBean,java.util.*,model.PrenotazioneModel,model.PrenotazioneModelDM"%>
-<div id="containerSuperiore">
+<div id="containerSuperiore" style="overflow:auto">
 			<div class="containerRisultati">
 				<% 
 					PrenotazioneModel model=new PrenotazioneModelDM();

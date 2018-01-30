@@ -24,15 +24,26 @@ public class RimuoviPrenotazioneController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		int idPrenotazione=Integer.parseInt(request.getParameter("idPrenotazione"));
-		int idCampo=Integer.parseInt(request.getParameter("idCampo"));
-		try {
-			model.doDelete(idPrenotazione);
-			request.setAttribute("idCampo", idCampo);
-			request.getRequestDispatcher("/jsp/gestionePrenotazioni.jsp").forward(request, response);
+		if(request.getParameter("action").equals("deleteByUtente")){
+			try {
+				model.doDelete(idPrenotazione);
+				response.sendRedirect(request.getContextPath()+"/jsp/profiloUtente.jsp");
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				int idCampo=Integer.parseInt(request.getParameter("idCampo"));
+				model.doDelete(idPrenotazione);
+				request.setAttribute("idCampo", idCampo);
+				request.getRequestDispatcher("/jsp/gestionePrenotazioni.jsp").forward(request, response);
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}

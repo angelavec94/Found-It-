@@ -186,4 +186,44 @@ public class PrenotazioneModelDM implements PrenotazioneModel{
 		}
 		return prenotazioni;
 	}
+	
+	@Override
+	public Collection<PrenotazioneBean> doRetrieveByCodiceFiscale(String aCodiceFiscale) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		Collection<PrenotazioneBean> prenotazioni = new LinkedList<PrenotazioneBean>();
+
+		String selectSQL = "SELECT * FROM "+PrenotazioneModelDM.TABLE_NAME+" WHERE UTENTECODICEFISCALE = ?";
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, aCodiceFiscale);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				PrenotazioneBean prenotazione = new PrenotazioneBean();
+
+				prenotazione.setIdPrenotazione(rs.getInt("IDPRENOTAZIONE"));
+				prenotazione.setData(rs.getDate("DATA"));
+				prenotazione.setOra(rs.getTime("ORA"));
+				prenotazione.setSaldata(rs.getBoolean("SALDATA"));
+				prenotazione.setTipo(rs.getString("TIPO"));
+				prenotazione.setIdCampoSportivo(rs.getInt("CAMPOSPORTIVOIDCAMPOSPORTIVO"));
+				prenotazione.setCodiceFiscaleUtente(rs.getString("UTENTECODICEFISCALE"));
+				
+				prenotazioni.add(prenotazione);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		return prenotazioni;
+	}
 }

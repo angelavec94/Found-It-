@@ -39,7 +39,7 @@
 			UtenteBean partner = (UtenteBean)request.getSession().getAttribute("login");
 			request.getSession().setAttribute("partitaIva", partner.getSocietaSportiva_PartitaIva());
 			%>
-			<a href="<%=request.getContextPath()%>/jsp/aggiungiCampo.jsp"><i class="fa fa-info-circle" style="margin-left: 2%; margin-top: 2%"></i> Aggiungi un campo</a>
+			<a href="<%=request.getContextPath()%>/jsp/aggiungiCampo.jsp"><i class="fa fa-plus" style="margin-left: 2%; margin-top: 2%"></i> Aggiungi un campo</a>
 			<div class="containerRisultati">
 				<% 
 					CampoSportivoModel model=new CampoSportivoModelDM();

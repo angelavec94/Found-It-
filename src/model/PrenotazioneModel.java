@@ -14,5 +14,7 @@ public interface PrenotazioneModel {
 	public Collection<PrenotazioneBean> doRetrieveAll(String order) throws SQLException;
 	
 	public Collection<PrenotazioneBean> doRetrieveByIDCampo(int anIDCampo) throws SQLException;
+	
+	public Collection<PrenotazioneBean> doRetrieveByCodiceFiscale(String aCodiceFiscale) throws SQLException;
 
 }
