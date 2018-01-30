@@ -1,4 +1,61 @@
 @CHARSET "ISO-8859-1";
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: red; /* Black background color */
+    color: black; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 30px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: -2;
+    left: 50%;
+    top: 95px;
+    font-size: 17px;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+     from {top: 0; opacity: 0;} 
+    to {top: 95px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {top: 0px; opacity: 0;}
+    to {top: 95px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {top: 95px; opacity: 1;} 
+    to {top: 0px; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {top: 95px; opacity: 1;}
+    to {top: 0px; opacity: 0;}
+}
+html,body{
+  margin:0;
+  padding:0;
+  background-color: azure ;
+}
+
+html{
+  position:relative; 
+  min-height: 100%;
+}
 .container {
 	border-radius: inherit;
 	background-color:azure;
@@ -47,13 +104,15 @@ section{
 select.campi,input.campi{
 	border-radius: 7px;
 	width: 61%;
+	background-color:white;
+	
 }
 .image-box {
     text-align: center;
-    margin: auto;
+    margin-left: 70%;
     display: block;
     font-size: 20px;
-    width: 40%;
+    width: 30%;
 }
 div.top{
 	border-radius:20px ;
@@ -113,7 +172,7 @@ header{
 	background: linear-gradient(141deg, #FF0000 0%, #FF1616 51%, #EE9587 90%);
 	text-align: center;
 	height: 80px !important;
-	position: static;
+	position: absolute;
     bottom: 0;  
 }
 div.displayTab {
@@ -194,9 +253,10 @@ div.tabContainer {
 	    }
 		
 		select,input.campi{
-			width: 75%;
-			padding-left:1%;
-			padding-right: 1%;
+			width: 65%;
+			padding-left:0.5%;
+			background-color:white;
+			
 		}
 		select{
 			width: 80%;
@@ -207,13 +267,13 @@ div.tabContainer {
 			margin-right:auto;
 			margin-top:4%;
 			margin-bottom:30%;
-			width:55%;
+			width:89%;
 			background-color:azure;
 		}
 				
 		#containerSuperiore label.registra{
  		   max-width: 100%;
-    	   width: 30%;
+    	   width: 25%;
     	   font-weight: 600;
 		   float:left;
 		}
@@ -244,13 +304,51 @@ div.tabContainer {
 
 /*************************************************************************************/
 @media screen and (max-width: 580px) {
+		html,body{
+ 			 margin:0;
+ 			 padding:0;
+  			 background-color: azure ;
+		}
 
+		html{
+  			position:relative; 
+  			min-height: 100%;
+		}
+	body {
+			margin-left: auto;
+			margin-right: auto;
+			width: 110%;
+			font-size: small;
+	    }
+header{
+	border-radius:40px;
+	width:170%;	
+	margin-left: auto;
+	margin-right: auto;
+	height: 50px;
+}
+.footer{
+	border: 1px solid black;
+	border-radius:40px;
+	width:170%;
+	margin-left: 6px;
+	background: linear-gradient(141deg, #FF0000 0%, #FF1616 51%, #EE9587 90%);
+	text-align: center;
+	height: 80px !important;
+	position: inherit;
+    bottom: 0;  
+}
+.logo{
+	float: left;
+	margin-left: 3%;	
+}
+		
+	
 	#containerSuperiore {
-		margin-left:auto;
-		margin-right:auto;
+		margin-left:10%;
 		margin-top:4%;
-		margin-bottom:30%;
-		width:95%;
+		margin-bottom:5%;
+		width:150%;
 		background-color:azure;
 	}
 	
@@ -266,13 +364,20 @@ div.tabContainer {
     	font-weight: 600;
 		float:left;
 	}
-	
+	#containerSuperiore .formelement {
+    margin-top: 1%;
+    width: 80%;
+}
 	select,input.campi{
 		font-size:xx-small;
 		width: 65%;
 		padding-left:10%;
 		padding-right: 5%;
 	}
+	img{
+		width: 50px;
+		height: auto;
+		}
 	.image-box {
     	text-align: center;
     	margin: auto;

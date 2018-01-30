@@ -25,16 +25,23 @@
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	
+	<% if(utente==null || utente.getUsername() == null){
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
+		message = "Effettuare il login prima di accedere al profilo utente!";
+		request.getSession().setAttribute("message", message);
+		rd.forward(request, response);
+	}
+	%>
 	<div id="containerSuperiore">
 		<div class="top">
-			<h2><center> PROFILO UTENTE</center></h2>
+			<h2><center> PROFILO <label style="text-transform: uppercase;"><%= utente.getTipo() %></label></center></h2>
 		</div>
 		<hr>
 		<div class="container ">
 			<br><br><br>	
 			<div class="image-box">
-				<center><b> nome utente</b> </center>
+				<center><b> <%=utente.getNome() %> <%= utente.getCognome() %></b> </center>
 				<br>
             	<img src="<%=request.getContextPath()%>/images/userStandard.png" id="user" alt="fotoUser">
             	<br>
@@ -44,29 +51,39 @@
  			
  		<div class="tabContainer">	
  			<div class="tab">
+ 				<%if(utente.getTipo().equals("partnerSportivo")){%>
 				<button style="width:25%;" class="tablinks" onclick="switchTab(event, 'Dati Societa Sportiva')" id="defaultOpen">Dati Società Sportiva</button> 			
+  				<%}%>
+  				
   				<button style="width:25%;" class="tablinks" onclick="switchTab(event, 'Dati Personali')" id="defaultOpen">Dati Personali</button>
   				<button style="width:25%; border-left:1px solid black; border-right:1px solid black;" class="tablinks" onclick="switchTab(event, 'Dati Account')">Dati Account</button>
+  				
+  				<%if(utente.getTipo().equals("utenteSemplice")){%>
+				<button style="width:25%; border-right:1px solid black" class="tablinks" onclick="switchTab(event, 'Prenotazioni')" id="defaultOpen">Prenotazioni</button> 			
+  				<%}%>
+  				
   				<button style="width:25%;" class="tablinks" onclick="switchTab(event, 'Privacy e Sicurezza')">Privacy e Sicurezza</button>
 			</div>
 			
+			<%if(utente.getTipo().equals("partnerSportivo")){%>
 			<div align="center" id="Dati Societa Sportiva" class="tabcontent">
 			<h2>Dati Società Sportiva</h2>
   				<div>
   				<form name="datiSocietaSportiva" action="" method="POST">
+  				<input type="text" name="action" id="action" value="" style="display: none;" />
         			<section style="width: 60%;">
         				<div class="displayTab">
 							<label style="font-weight:600;width:39%;float:left;">Nome Società Sportiva</label>						
-							<input type="text" name="nomeSocieta" value=""> 
+							<input type="text" name="nomeSocieta" value="<%=societa.getNomeSocieta() %>"> 
 						</div>
 						
 						<div class="displayTab">
 							<label class="registra">Indirizzo sede</label>	
-							<input type="text" name="indirizzoSede" value="">
+							<input type="text" name="indirizzoSede" value="<%=societa.getIndirizzoSede() %>">
 						</div>
 						<div class="displayTab">
 							<label class="registra">Partita Iva</label>	
-							<input type="text" name="partitaIva" value="">
+							<input type="text" name="partitaIva" value="<%=societa.getPartitaIva() %>">
 						</div>
 					</section>
 							
@@ -74,46 +91,47 @@
 												 
 					<div class="formelement">
 					<label class="registra">Telefono</label>
-				 	<input type="text" name="telefono" value="">
+				 	<input type="text" name="telefono" value="<%=societa.getTelefono() %>">
 				    </div>
 
 					<div class="formelement">
 					<label class="registra">Codice di autenticazione</label>
-				 	<input type="text" name="codiceAutenticazione" value="">				 
+				 	<input type="text" name="codiceAutenticazione" value="<%=societa.getCodiceAutenticazione() %>">				 
    					</div>	
 					</section>
 						
 					<br><br>
 					<button style="width:15%;"type="submit" name="cambiaDatiPersonali">Cambia</button>
-					<br><br><br>	
+					<br><br><br><br><br>	
 					</form>	
         		</div>    		
 			</div>
-
+			<%}%>
 
 
 			<div align="center" id="Dati Personali" class="tabcontent">
 			<h2>Dati Personali</h2>
   				<div>
-  				<form name="datiPersonali" action="" method="POST">
+  				<form name="datiPersonali" action="<%=request.getContextPath()%>/UserController" method="POST" onsubmit="return validateDatiPersonali()">
+  				<input type="text" name="action" id="action" value="datiPersonali" style="display: none;" />
         			<section style="width: 50%;">
         				<div class="displayTab">
 							<label class="registra">Nome</label>						
-							<input type="text" name="nome" value=""> 
+							<input type="text" name="nome" value="<%=utente.getNome() %>"> 
 						</div>
 						
 						<div class="displayTab">
 							<label class="registra">Cognome</label>	
-							<input type="text" name="cognome" value="">
+							<input type="text" name="cognome" value="<%=utente.getCognome() %>">
 						</div>
 						<div class="displayTab">
 							<label class="registra">Codice Fiscale</label>	
-							<input type="text" name="codiceFiscale" value="">
+							<input type="text" name="codicefiscale" readonly="readonly" value="<%=utente.getCodiceFiscale() %>">
 						</div>
 			
 						<div class="displayTab"> 
 							<label class="registra">Città</label>
-							<input type="text" name="citta" value="">
+							<input type="text" name="citta" value="<%=utente.getCitta() %>">
 						</div>
 					</section>
 							
@@ -121,17 +139,17 @@
 												 
 						<div class="displayTab">	
 							<label class="registra">Provincia</label>
-							<input type="text" name="provincia" value="">
+							<input type="text" name="activityProvince" value="<%=utente.getProvincia() %>">
 						</div>
 											
 						<div class="displayTab">
 							<label  class="registra">Cap</label>
-							<input type="text" name="cap" value="">
+							<input type="text" name="cap" value="<%=utente.getCap() %>">
 						</div>
 											
 						<div class="displayTab">
 							<label class="registra">Telefono</label>
-							<input type="text" name="telefono" value="">
+							<input type="text" name="telefono" value="<%=utente.getTelefono() %>">
 	 					</div>
 					</section>	
 					<br><br>
@@ -145,25 +163,26 @@
   				<h2>Dati Account</h2>
   				
   				<div style="width: 50%; margin-left: auto; margin-right: auto;">
-  					<form name="datiAccount" action="" method="POST">
+  					<form name="datiAccount" action="<%=request.getContextPath()%>/UserController" method="POST">
+  					<input type="text" name="action" id="action" value="datiAccount" style="display: none;" />
   					<div class="displayTab">
 						<label  class="datiprofilo">Username</label>
-				 		<input name="username" readonly="readonly" value=""> 
+				 		<input name="username" readonly="readonly" value="<%=utente.getUsername() %>"> 
 					</div>
 				
 					<div class="displayTab">
 						<label  class="datiprofilo">Password</label>
-				 		<input	type="password" name="password" value="">	 
+				 		<input	type="password" name="password" value="<%=utente.getPassword() %>">	 
 					</div>
 					
 					<div class="displayTab">
 						<label  class="datiprofilo">Conferma password</label>
-				 		<input	type="password" name="confpassword" value="">	 
+				 		<input	type="password" name="confpassword" value="<%=utente.getPassword() %>">	 
 					</div>
 				
 					<div class="displayTab">
 						<label  class="datiprofilo">Email<span style="color: #FF0000">*</span></label>
-				 		<input type="email" name="email" value="">				 
+				 		<input type="email" name="email" value="<%=utente.getEmail() %>">				 
    					</div>
    					<br><br>
 					<button style="width:30%;" type="submit" name="cambiaDatiProfilo">Cambia</button>
@@ -171,6 +190,13 @@
 					</form>
    				</div>
    				
+			</div>
+
+	        <div align="center" id="Prenotazioni" class="tabcontent">
+			<h2>Prenotazioni Effettuate</h2>
+  				
+  				
+        		   		
 			</div>
 
 			<div id="Privacy e Sicurezza" class="tabcontent">
@@ -181,6 +207,7 @@
   				</p>
 			</div>
  		</div>
+ 		<br><br><br><br><br><br><br><br><br><br>
 	</div>	
 </div>
 
@@ -202,7 +229,37 @@
     		evt.currentTarget.className += " active";
 		}
 		document.getElementById("defaultOpen").click();
+		
+		
+		function validateDatiProfilo(){
+			var password = document.datiProfilo.password.value;
+			var confpassword = document.datiProfilo.confpassword.value;
+			var email = document.datiProfilo.email.value;
+			
+			if (isEmpty(password,"password")){
+				return false;
+			}
+			if (!isAValidString(password,regex.password,"password")){
+				return false;
+			}
+			if (isEmpty(confpassword,"confpassword")){
+				return false;
+			}
+			if (!(confpassword == password)){
+				alert("Errore: I campi password e conferma password devono corrispondere!")
+				return false;
+			}
+			if (isEmpty(email,"email")){
+				return false;
+			}
+			if (!isAValidString(email,regex.email,"email")){
+				return false;
+			}
+		
+			return true;
+		}
 	</script>
-     	
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
+	
 </body>
 </html>
