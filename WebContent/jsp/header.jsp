@@ -91,7 +91,8 @@
 					<li><a href="<%=request.getContextPath()%>/jsp/paginaModeratore.jsp"><i class="fa fa-info-circle" aria-hidden="true"></i> Opzioni Moderatore</a></li>
 					<%}%>
 					<% if(utente.getTipo().equals("partnerSportivo")){%>
-					<li><a href="<%=request.getContextPath()%>/jsp/aggiungiCampo.jsp"><i class="fa fa-info-circle" aria-hidden="true"></i> Aggiungi Campo</a></li>
+					<li><a href="<%=request.getContextPath()%>/jsp/gestioneCampi.jsp"><i class="fa fa-futbol-o" aria-hidden="true"></i> Gestione Campi</a></li>
+					
 					<%}%>
 
 				</ul>

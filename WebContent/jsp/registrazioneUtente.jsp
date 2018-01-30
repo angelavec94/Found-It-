@@ -131,7 +131,7 @@
 	</div>
 	</form>
 	<form  method="post" action="UploadServlet" enctype="multipart/form-data">	
-	<div style= "width:35%; float:left;">
+	<div style= "width:5%; float:left;">
 	
 			<div class="image-box">
 			             		<!--<h2>${requestScope.message}</h2>-->

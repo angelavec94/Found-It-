@@ -19,7 +19,7 @@
 	<% if(utente==null || utente.getUsername() == null){
 		ServletContext sc = getServletContext();
 		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
-		String message = "Effettuare il login prima di accedere ai contatti del Moderatore!";
+		message = "Effettuare il login prima di accedere ai contatti del Moderatore!";
 		request.getSession().setAttribute("message", message);
 		rd.forward(request, response);
 	}
