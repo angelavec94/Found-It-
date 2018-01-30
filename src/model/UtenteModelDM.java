@@ -162,6 +162,7 @@ public class UtenteModelDM  implements UtenteModel{
 
 
 			result = preparedStatement.executeUpdate();
+			connection.commit();
 
 		} finally {
 			try {
