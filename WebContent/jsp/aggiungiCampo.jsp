@@ -12,7 +12,15 @@
 	<title>Found It! | Aggiungi Campo</title>
 </head>
 <body>
-<%@include file="header.jsp"%>	
+<%@include file="header.jsp"%>
+<% if(utente==null || utente.getUsername() == null){
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
+		message = "Effettuare il login prima di accedere al profilo utente!";
+		request.getSession().setAttribute("message", message);
+		rd.forward(request, response);
+	}
+%>
 
 		<div id="containerSuperiore">
 		<div class="top">
@@ -20,7 +28,7 @@
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
 		<div  align="center" class="container">
-			<form name="aggiungiCampo" action="" method="POST">
+			<form name="aggiungiCampo" action="<%=request.getContextPath()%>/AggiungiCampoController" method="POST">
 			<div style= "width:50%;">
 				<br><br>
 				<div class="formelement">
@@ -30,7 +38,7 @@
 
 				<div class="formelement">
 					<label  class="registra">Fascia oraria</label>
-				 	<input class="campi" type="text" name="fasciaOraria" placeholder=" inserisci fascia oraria">
+				 	<input class="campi" type="text" name="fasciaOraria" placeholder=" inserisci fascia oraria(Formato hh-hh)">
 				</div>
 
 				<div class="formelement">
@@ -39,13 +47,24 @@
 				</div>
 
 				<div class="formelement">
-					<label  class="registra">Tipologia</label>
-					<input class="campi" type="text" name="tipologia"  placeholder=" inserisci la tipologia(es. calcio)">
+					<label  class="registra">Tipologia</label> 
+					<select name="tipo">
+							<option value="calcio">calcio</option>
+							<option value="calcio a 5">calcio a 5</option>
+							<option value="pallavolo">pallavolo</option>
+							<option value="basket">basket</option>
+					</select>
 				</div>
 
 				<div class="formelement">
-					<label  class="registra">Prezzo</label>
-				 	<input class="campi" type="text" name="prezzo"  placeholder=" inserisci il prezzo">
+					<label  class="registra">Prezzo Online</label>
+				 	<input class="campi" type="text" name="prezzoOnline"  placeholder=" inserisci il prezzo online">
+				</div>
+				
+				<div class="formelement">
+					<label  class="registra">Prezzo sul Campo</label>
+				 	<input class="campi" type="text" name="prezzoSulCampo"  placeholder=" inserisci il prezzo sul campo">
+				 	<input name="partitaIva" value="<%=request.getSession().getAttribute("partitaIva")%>" type="hidden"/>
 				</div>
 
 				<br>

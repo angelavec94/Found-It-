@@ -33,10 +33,8 @@ public class ConfermaPrenotazioneController extends HttpServlet{
 		response.setContentType("text/html");
 		Date data = Date.valueOf(request.getParameter("dataPrenotazione"));
 		int or= Integer.parseInt(request.getParameter("oraPrenotazione"));
-		long hairottoilcazzo=(((or-1)*60)*60)*1000;
-		System.out.println(or);
-		Time ora = new Time(hairottoilcazzo);
-		System.out.println(ora);
+		long oraInMs=(((or-1)*60)*60)*1000;
+		Time ora = new Time(oraInMs);
 		boolean saldata;
 		if(request.getParameter("saldata").equals("true"))
 			saldata=true;
@@ -52,7 +50,6 @@ public class ConfermaPrenotazioneController extends HttpServlet{
 			if(prenotazioni!=null && prenotazioni.size()!=0){
 				PrenotazioneBean[] prova=new PrenotazioneBean[prenotazioni.size()];
 				prova=prenotazioni.toArray(prova);
-				System.out.println(prova);
 				PrenotazioneBean ultimo=prova[prova.length-1];
 				idPrenotazione=ultimo.getIdPrenotazione()+1;
 				PrenotazioneBean toAdd=new PrenotazioneBean();
@@ -67,7 +64,6 @@ public class ConfermaPrenotazioneController extends HttpServlet{
 				request.getSession().removeAttribute("risultatiRicerca");
 				request.getSession().removeAttribute("oraPrenotazione");
 				request.getSession().removeAttribute("dataPrenotazione");
-				System.out.println("tutt a post o frat!");
 				response.sendRedirect(request.getContextPath()+"/jsp/home.jsp");
 			}
 			else{
@@ -84,7 +80,6 @@ public class ConfermaPrenotazioneController extends HttpServlet{
 				request.getSession().removeAttribute("risultatiRicerca");
 				request.getSession().removeAttribute("oraPrenotazione");
 				request.getSession().removeAttribute("dataPrenotazione");
-				System.out.println("tutt a post o frat!");
 				response.sendRedirect(request.getContextPath()+"/jsp/home.jsp");
 			}
 			

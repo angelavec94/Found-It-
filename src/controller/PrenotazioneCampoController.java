@@ -31,8 +31,6 @@ public class PrenotazioneCampoController extends HttpServlet{
 		int idCampo = Integer.parseInt(request.getParameter("idCampo"));
 		
 		CampoSportivoBean campo = new CampoSportivoBean();
-
-		System.out.println("Il parametro passato è: idCampo="+idCampo);
 		
 		try {
 			campo = model.doRetrieveByKey(idCampo);

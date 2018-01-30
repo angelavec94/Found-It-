@@ -21,6 +21,7 @@
 	}
 </style>
 </head>
+<body>
 <%@include file="header.jsp"%>
 	
 	<div id="containerSuperiore">
@@ -30,7 +31,7 @@
 		<hr></hr>
 
 		<div class="container">
-			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController" onsubmit="return trovaCoordinate()">
+			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController">
 				<div class="container-form-di-ricerca-home">
 					<table>
 						<tr>
@@ -53,8 +54,6 @@
 							<td>
 								<input name="ora" type="number" name="ora" min="0" max="23">:
 								<input name="minuti" type="number" name="minuti" min="0" max="59">
-								<input name="latitude" id="latitude" type="hidden"/>
-								<input name="longitude" id="longitude" type="hidden"/>
 							</td>	
 						</tr>
 					</table>
@@ -69,52 +68,6 @@
 		</div>
 	</div> 
 	<%@include file="footer.jsp"%>
-	
-	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCofJoxoB2qURli3Js_1iUFjixonLuqk-M&sensor=false&amp;libraries=places"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
-    <script src="../js/jquery.geocomplete.js"></script>
     <script src="../js/logger.js"></script>
-	
-	<script>
-      $(function(){
-        
-        $("#geocomplete").geocomplete()
-          .bind("geocode:result", function(event, result){
-            $.log("Result: " + result.formatted_address);
-          })
-          .bind("geocode:error", function(event, status){
-            $.log("ERROR: " + status);
-          })
-          .bind("geocode:multiple", function(event, results){
-            $.log("Multiple: " + results.length + " results found");
-          });
-        
-        $("#find").click(function(){
-          $("#geocomplete").trigger("geocode");
-        });        
-      });
-      
-  		function trovaCoordinate(){
-  			var input_address = $("#geocomplete").val();
-  			var geocoder = new google.maps.Geocoder();
-  			geocoder.geocode( { address: input_address }, function(results, status) {
-  				if (status == google.maps.GeocoderStatus.OK) {
-  					var lat = results[0].geometry.location.lat();
-  					var lng = results[0].geometry.location.lng();
-  					$("latitude").val()=lat;
-  					$("longitude").val()=lng;
-  					return true
-  					}
-  				else {
-  					alert("Indirizzo non valido!");
-  					return false
-  					}
-  				});
-  		}
-      </script>
-	
-<body>
-
 </body>
 </html>

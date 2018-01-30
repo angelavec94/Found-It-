@@ -92,15 +92,8 @@
 						   <%=fascia[1]%>.
 						</p>
 						<%
-							Object isLogged=request.getSession().getAttribute("utenteLoggato");
-						
-						
-							//DA RIMUOVERE////////////////////////////////////////////////////////////////
-							isLogged=true;
-							//DA RIMUOVERE////////////////////////////////////////////////////////////////
-							
-							
-							if(isLogged!=null&&(boolean)isLogged){
+							Boolean isLogged=(Boolean)request.getSession().getAttribute("utenteLoggato");
+							if(isLogged!=null&&isLogged){
 						%>
 								<form name="formPrenota" method="GET" action="<%=request.getContextPath()%>/PrenotazioneCampoController">
 								<input name="idCampo" id="idCampo" value="<%=bean.getIdCampoSportivo()%>" type="hidden"/>
@@ -108,8 +101,8 @@
 								</form>
 						<%
 							} else {
-								SocietaSportivaModel societa=new SocietaSportivaModelDM();
-								SocietaSportivaBean soc=societa.doRetrieveByKey(bean.getPartitaIvaSocieta());
+								SocietaSportivaModel societaSportiva=new SocietaSportivaModelDM();
+								SocietaSportivaBean soc=societaSportiva.doRetrieveByKey(bean.getPartitaIvaSocieta());
 								String numTel=soc.getTelefono();
 						%>
 								<h3 style="float: right;"> Per procedere alla prenotazione online effettua il login o chiama al numero <%=numTel%>!</h3>

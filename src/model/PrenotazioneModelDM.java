@@ -44,6 +44,28 @@ public class PrenotazioneModelDM implements PrenotazioneModel{
 		
 	}
 
+	public synchronized boolean doDelete(int anID) throws SQLException {
+		Connection connection=null;
+		PreparedStatement prepStat=null;
+		int res=0;
+		String deleteSQL="DELETE FROM "+PrenotazioneModelDM.TABLE_NAME+" WHERE IDPRENOTAZIONE = ?";
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			prepStat=connection.prepareStatement(deleteSQL);
+			prepStat.setInt(1, anID);
+			prepStat.executeUpdate();
+			connection.commit();
+		} finally {
+			try {
+				if (prepStat!=null)
+					prepStat.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		return (res!=0);
+	}
+	
 	@Override
 	public boolean doUpdate(PrenotazioneBean prenotazioneToUpdate) throws SQLException {
 
@@ -123,5 +145,45 @@ public class PrenotazioneModelDM implements PrenotazioneModel{
 		}
 		return prenotazioni;
 
+	}
+
+	@Override
+	public Collection<PrenotazioneBean> doRetrieveByIDCampo(int anIDCampo) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		Collection<PrenotazioneBean> prenotazioni = new LinkedList<PrenotazioneBean>();
+
+		String selectSQL = "SELECT * FROM "+PrenotazioneModelDM.TABLE_NAME+" WHERE CAMPOSPORTIVOIDCAMPOSPORTIVO = ?";
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, anIDCampo);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				PrenotazioneBean prenotazione = new PrenotazioneBean();
+
+				prenotazione.setIdPrenotazione(rs.getInt("IDPRENOTAZIONE"));
+				prenotazione.setData(rs.getDate("DATA"));
+				prenotazione.setOra(rs.getTime("ORA"));
+				prenotazione.setSaldata(rs.getBoolean("SALDATA"));
+				prenotazione.setTipo(rs.getString("TIPO"));
+				prenotazione.setIdCampoSportivo(rs.getInt("CAMPOSPORTIVOIDCAMPOSPORTIVO"));
+				prenotazione.setCodiceFiscaleUtente(rs.getString("UTENTECODICEFISCALE"));
+				
+				prenotazioni.add(prenotazione);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		return prenotazioni;
 	}
 }

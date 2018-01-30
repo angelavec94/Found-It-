@@ -33,33 +33,29 @@ public class RicercaController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
 		String tipo = request.getParameter("tipo");
 		String luogo = request.getParameter("luogo");
 		String data = request.getParameter("data");
-		int ora = Integer.parseInt(request.getParameter("ora"));
-		int minuti = Integer.parseInt(request.getParameter("minuti"));
-		String lat = request.getParameter("latitude");
-		String lng = request.getParameter("longitude");
+		int ora=0;
+		if(!request.getParameter("ora").equals("")){
+			ora = Integer.parseInt(request.getParameter("ora"));
+		}
 		
 		Collection<CampoSportivoBean> risultatiRicerca = new LinkedList<CampoSportivoBean>();
-
-		System.out.println("I parametri passati sono: tipo="+tipo+",luogo="+luogo+",data="+data+",ora="+ora+",minuti="+minuti+"latitudine="+lat+",longitudine="+lng);
 		
 		try {
-			Collection<?> campi = modelCampo.doRetrieveAll("tipologia");
+			Collection<CampoSportivoBean> campi = modelCampo.doRetrieveByLuogoTipo(luogo, tipo);
 				if (campi != null && campi.size() != 0) {
-					Iterator<?> it = campi.iterator();
+					Iterator<CampoSportivoBean> it = campi.iterator();
 					while (it.hasNext()) {
 						CampoSportivoBean campo = (CampoSportivoBean) it.next();
 						String[] fascia=campo.getFasciaOraria().split("-");
 						int oraInizio=Integer.parseInt(fascia[0]);
-						System.out.println(oraInizio);
 						int oraFine=Integer.parseInt(fascia[1]);
 						
-						Collection<PrenotazioneBean> prenotazioni=modelPre.doRetrieveAll("");
+						Collection<PrenotazioneBean> prenotazioni=modelPre.doRetrieveByIDCampo(campo.getIdCampoSportivo());
 						
-						if(campo.getTipologia().equals(tipo) && ora>=oraInizio && ora <=oraFine && campo.getLuogo().equals(luogo)){
+						if(ora>=oraInizio && ora <=oraFine){
 							if(prenotazioni == null || prenotazioni.size()==0){
 								risultatiRicerca.add(campo);
 							}
@@ -69,7 +65,7 @@ public class RicercaController extends HttpServlet {
 								while(ite.hasNext()){
 									PrenotazioneBean pr=(PrenotazioneBean)ite.next();
 									long oraInMs=(((ora-1)*60)*60)*1000;
-									if(pr.getIdCampoSportivo()==campo.getIdCampoSportivo() && pr.getData().compareTo(Date.valueOf(data))==0 && pr.getOra().getTime()==oraInMs){
+									if(pr.getData().compareTo(Date.valueOf(data))==0 && pr.getOra().getTime()==oraInMs){
 										ok=false;
 									}
 								}

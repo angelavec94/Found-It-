@@ -60,20 +60,15 @@
 				<div class=pagaOnline>
 					Promozione: Prenota online<br>Prezzo Scontato: <%=bean.getPrezzoOnline()%>
 					<%
-					//Object utente=request.getSession().getAttribute("utenteLog");
-					UtenteModel ut=new UtenteModelDM();
-					UtenteBean pezzotto=ut.doRetrieveByKey("LBNGNE94M03F924M");
-					//pezzotto.setNumeroCarta("666333666");
+					UtenteBean utent=(UtenteBean)request.getSession().getAttribute("login");
 					
-					if(/*utente!=null*/pezzotto!=null){
-						//UtenteBean utent=(UtenteBean)utente;
+					if(utent!=null){
 						CartaModel carta=new CartaModelDM();
-						//CartaBean car=carta.doRetrieveByKey(utent.getNumeroCarta());
-						CartaBean car=carta.doRetrieveByKey(pezzotto.getNumeroCarta());
+						CartaBean car=carta.doRetrieveByKey(utent.getNumeroCarta());
 						if(car!=null){
 							%>
 							<form name="formPrenotaOnline" method="GET" action="<%=request.getContextPath()%>/ConfermaPrenotazioneController">
-							<input name="cfUtente" value="<%=pezzotto.getCodiceFiscale() %>" type="hidden"/>
+							<input name="cfUtente" value="<%=utent.getCodiceFiscale() %>" type="hidden"/>
 							<input name="idCampo" value="<%=bean.getIdCampoSportivo() %>" type="hidden"/>
 							<input name="oraPrenotazione" value="<%=request.getSession().getAttribute("oraPrenotazione") %>" type="hidden"/>
 							<input name="dataPrenotazione" value="<%=request.getSession().getAttribute("dataPrenotazione") %>" type="hidden"/>
@@ -83,7 +78,6 @@
 							</form>
 							<%
 						} else {
-							System.out.println(pezzotto.toString());
 							%>
 							<h3>Per procedere al pagamento registrare una carta!</h3>
 							<form name="formRegistraCarta" method="GET" action="<%=request.getContextPath()%>/CartaController">
@@ -95,7 +89,7 @@
 							<input name="scadenzaCarta" type="date"><br>
 							CVV/CVV2:
 							<input name="cvvCarta" type="number" ><br>
-							<input name="cfUtente" value="<%=pezzotto.getCodiceFiscale() %>" type="hidden"/>
+							<input name="cfUtente" value="<%=utent.getCodiceFiscale() %>" type="hidden"/>
 							<input type="submit" value="Conferma Dati">
 							</form>
 							<%
@@ -113,8 +107,8 @@
 				<div class=pagaSulCampo>
 					Prenota sul campo<br>Prezzo: <%=bean.getPrezzoSulCampo()%><br><br><br>
 					<%
-					SocietaSportivaModel societa=new SocietaSportivaModelDM();
-					SocietaSportivaBean soc=societa.doRetrieveByKey(bean.getPartitaIvaSocieta());
+					SocietaSportivaModel societaSportiva=new SocietaSportivaModelDM();
+					SocietaSportivaBean soc=societaSportiva.doRetrieveByKey(bean.getPartitaIvaSocieta());
 					String numTel=soc.getTelefono();
 					%>
 					Chiama al numero <%=numTel%>

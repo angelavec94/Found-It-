@@ -33,7 +33,6 @@ public class CartaController extends HttpServlet{
 		Date data = Date.valueOf(request.getParameter("scadenzaCarta"));
 		int cod = Integer.parseInt(request.getParameter("cvvCarta"));
 		String cfUtente = request.getParameter("cfUtente");
-		System.out.println(cfUtente);
 		CartaBean carta = new CartaBean();
 		carta.setIntestatario(intestatario);
 		carta.setNumeroCarta(numero);
@@ -45,10 +44,9 @@ public class CartaController extends HttpServlet{
 			car.doSave(carta);
 			UtenteModel ut=new UtenteModelDM();
 			UtenteBean toUpdate=ut.doRetrieveByKey(cfUtente);
-			System.out.println(toUpdate.toString());
 			toUpdate.setNumeroCarta(numero);
 			ut.doUpdate(toUpdate);
-			System.out.println("tutto a posto!");
+			request.getSession().setAttribute("login", toUpdate);
 			response.sendRedirect(request.getContextPath()+"/jsp/prenotazioneCampo.jsp");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

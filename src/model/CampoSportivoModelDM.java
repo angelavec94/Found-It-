@@ -47,7 +47,8 @@ public class CampoSportivoModelDM implements CampoSportivoModel {
 			connection = DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(deleteSQL);
 			prepStat.setInt(1, anID);
-			res=prepStat.executeUpdate();
+			prepStat.executeUpdate();
+			connection.commit();
 		} finally {
 			try {
 				if (prepStat!=null)
@@ -131,6 +132,91 @@ public class CampoSportivoModelDM implements CampoSportivoModel {
 		try{
 			connection=DriverManagerConnectionPool.getConnection();
 			prepStat=connection.prepareStatement(selectSQL);
+			ResultSet rs=prepStat.executeQuery();
+			while(rs.next()){
+				CampoSportivoBean campo = new CampoSportivoBean();
+				campo.setIdCampoSportivo(rs.getInt("IDCAMPOSPORTIVO"));
+				campo.setNome(rs.getString("NOME"));
+				campo.setFasciaOraria(rs.getString("FASCIAORARIA"));
+				campo.setLuogo(rs.getString("LUOGO"));
+				campo.setTipologia(rs.getString("TIPOLOGIA"));
+				campo.setPrezzoOnline(rs.getDouble("PREZZOONLINE"));
+				campo.setPrezzoSulCampo(rs.getDouble("PREZZOSULCAMPO"));
+				campo.setPartitaIvaSocieta(rs.getString("SOCIETASPORTIVAPARTITAIVA"));
+				campi.add(campo);
+			}
+		}finally{
+			try{
+				if(prepStat!=null)
+					prepStat.close();
+			}finally{
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		return campi;
+	}
+
+	public Collection<CampoSportivoBean> doRetrieveByLuogoTipo(String aLuogo, String aTipo) throws SQLException {
+		Connection connection=null;
+		PreparedStatement prepStat=null;
+		Collection<CampoSportivoBean> campi=new LinkedList<CampoSportivoBean>();
+		if(aLuogo==null||aLuogo.equals("")&&aTipo==null||aTipo.equals("")){
+			campi=doRetrieveAll("");
+			return campi;
+		}
+		String selectSQL="SELECT * FROM "+CampoSportivoModelDM.TABLE_NAME+" WHERE ";
+		
+		try{
+			connection=DriverManagerConnectionPool.getConnection();
+			if(aLuogo!=null&&!aLuogo.equals("")){
+				selectSQL=selectSQL+"LUOGO = ?";
+				if(aTipo!=null&&!aTipo.equals("")){
+					selectSQL=selectSQL+" AND TIPOLOGIA = ?";
+					prepStat=connection.prepareStatement(selectSQL);
+					prepStat.setString(1, aLuogo);
+					prepStat.setString(2, aTipo);
+				} else {
+					prepStat=connection.prepareStatement(selectSQL);
+					prepStat.setString(1, aLuogo);
+				}
+			} else {
+				selectSQL=selectSQL+"TIPOLOGIA = ?";
+				prepStat=connection.prepareStatement(selectSQL);
+				prepStat.setString(1, aTipo);
+			}
+			ResultSet rs=prepStat.executeQuery();
+			while(rs.next()){
+				CampoSportivoBean campo = new CampoSportivoBean();
+				campo.setIdCampoSportivo(rs.getInt("IDCAMPOSPORTIVO"));
+				campo.setNome(rs.getString("NOME"));
+				campo.setFasciaOraria(rs.getString("FASCIAORARIA"));
+				campo.setLuogo(rs.getString("LUOGO"));
+				campo.setTipologia(rs.getString("TIPOLOGIA"));
+				campo.setPrezzoOnline(rs.getDouble("PREZZOONLINE"));
+				campo.setPrezzoSulCampo(rs.getDouble("PREZZOSULCAMPO"));
+				campo.setPartitaIvaSocieta(rs.getString("SOCIETASPORTIVAPARTITAIVA"));
+				campi.add(campo);
+			}
+		}finally{
+			try{
+				if(prepStat!=null)
+					prepStat.close();
+			}finally{
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		return campi;
+	}
+
+	public Collection<CampoSportivoBean> doRetrieveByPartitaIvaSocieta(String aPartitaIva) throws SQLException {
+		Connection connection=null;
+		PreparedStatement prepStat=null;
+		Collection<CampoSportivoBean> campi=new LinkedList<CampoSportivoBean>();
+		String selectSQL="SELECT * FROM "+CampoSportivoModelDM.TABLE_NAME+" WHERE SOCIETASPORTIVAPARTITAIVA = ?";
+		try{
+			connection=DriverManagerConnectionPool.getConnection();
+			prepStat=connection.prepareStatement(selectSQL);
+			prepStat.setString(1,aPartitaIva);
 			ResultSet rs=prepStat.executeQuery();
 			while(rs.next()){
 				CampoSportivoBean campo = new CampoSportivoBean();

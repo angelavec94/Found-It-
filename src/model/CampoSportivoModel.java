@@ -9,4 +9,6 @@ public interface CampoSportivoModel {
 	public boolean doUpdate(CampoSportivoBean campoToUpdate) throws SQLException;
 	public CampoSportivoBean doRetrieveByKey(int anID) throws SQLException;
 	public Collection<CampoSportivoBean> doRetrieveAll(String order) throws SQLException;
+	public Collection<CampoSportivoBean> doRetrieveByLuogoTipo(String aLuogo,String aTipo) throws SQLException;
+	public Collection<CampoSportivoBean> doRetrieveByPartitaIvaSocieta(String aPartitaIva) throws SQLException;
 }
