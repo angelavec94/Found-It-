@@ -23,6 +23,7 @@
 			if(messaggio==null || messaggio.equals("") ){
 				messaggio=(String)request.getAttribute("message");
 			}
+
 	%>
 </head>
 <body <% if(messaggio!=null && !messaggio.equals("") ) { %>onload="showMessage()" <%}%>>
@@ -100,12 +101,17 @@
 		</div>	
 		<% } %>
 	</header>
+	<form name="messaggino">
+		<input name="snackbar" value="<%= messaggio%>" type="hidden">
+	</form>
+	<%request.getSession().setAttribute("message", ""); %>
+	
 	<script>
 	
 		function showMessage() {
 	    // Get the snackbar DIV
-	    	var x = document.getElementById("snackbar")
-			
+	    	var x = document.messaggino.snackbar.value;
+			alert(x);
 	    // Add the "show" class to DIV
 	    x.className = "show";
 
@@ -113,7 +119,6 @@
 	    	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 		}
 		</script>
-	<div id="snackbar"><%= messaggio%></div>
 </body>
-<% messaggio= "";%>
+
 </html>
