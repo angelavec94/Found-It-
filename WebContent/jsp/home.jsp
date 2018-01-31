@@ -61,11 +61,12 @@
 				<br>
 				<br>
 				<hr>
-				<br>
+				<br><br><br>
 				<input style="width:15%;" id="cerca" type="submit" value="cerca!">
 			</form>
-			<br>
+			<br><br>
 		</div>
+		<br><br>
 	</div> 
 	<%@include file="footer.jsp"%>
     <script src="../js/logger.js"></script>

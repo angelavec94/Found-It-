@@ -30,17 +30,17 @@
 				<h2><center>CONTATTI MODERATORE</center></h2>
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
-			<div class="container">
+			<div class="container" style="overflow:auto;">
 				<br><br>
 				<p><% 	final UtenteModel model = new UtenteModelDM(); 
 				Collection<UtenteBean> utenti= model.doRetrieveAll("tipo");%>
   				</p>
 			  	<table  style="width:50%" align="center" border="2"  cellpadding="10">
 					<tr>
-						<th style="width:20%"> Nome </th>
-						<th style="width:25%"> Cognome </th>
-						<th style="width:25%"> Telefono </th>
-						<th style="width:30%"> Email </th>
+						<th style="overflow:auto;"> Nome </th>
+						<th style="overflow:auto;"> Cognome </th>
+						<th style="overflow:auto;"> Telefono </th>
+						<th style="overflow:auto;"> Email </th>
 						
 					</tr>
 				<%
@@ -71,6 +71,7 @@
 				</table>
 				<br><br><br>		
 			</div>
+			<br><br><br><br>
 		</div>
 	
 	

@@ -15,11 +15,17 @@
 		div.displayTab label.registra {
 			min-width: 100px;
 		}
+		
 		div.displayTab label.datiprofilo {
 			min-width: 200px;
 			font-weight: bold;
-			
-			
+		}
+		div.image-box {
+   			 text-align: center;
+    		margin-left: 35%;
+    		display: block;
+    		font-size: 20px;
+    		width: 30%;
 		}
 	</style>
 </head>
@@ -50,20 +56,20 @@
  				<br><br>
  			</div>
  			
- 		<div class="tabContainer">	
+ 		<div class="tabContainer"  style="overflow:auto">	
  			<div class="tab">
  				<%if(utente.getTipo().equals("partnerSportivo")){%>
-				<button style="width:25%;" class="tablinks" onclick="switchTab(event, 'Dati Societa Sportiva')" id="defaultOpen">Dati Società Sportiva</button> 			
+				<button  class="tablinks" onclick="switchTab(event, 'Dati Societa Sportiva')" id="defaultOpen">Dati Società Sportiva</button> 			
   				<%}%>
   				
-  				<button style="width:25%;" class="tablinks" onclick="switchTab(event, 'Dati Personali')" id="defaultOpen">Dati Personali</button>
-  				<button style="width:25%; border-left:1px solid black; border-right:1px solid black;" class="tablinks" onclick="switchTab(event, 'Dati Account')">Dati Account</button>
+  				<button  class="tablinks" onclick="switchTab(event, 'Dati Personali')" id="defaultOpen">Dati Personali</button>
+  				<button  style="border-left:1px solid black; border-right:1px solid black;" class="tablinks" onclick="switchTab(event, 'Dati Account')">Dati Account</button>
   				
   				<%if(utente.getTipo().equals("utenteSemplice")){%>
-				<button style="width:25%; border-right:1px solid black" class="tablinks" onclick="switchTab(event, 'Prenotazioni')" id="defaultOpen">Prenotazioni</button> 			
+				<button  style="border-right:1px solid black" class="tablinks" onclick="switchTab(event, 'Prenotazioni')" id="defaultOpen">Prenotazioni</button> 			
   				<%}%>
   				
-  				<button style="width:25%;" class="tablinks" onclick="switchTab(event, 'Privacy e Sicurezza')">Privacy e Sicurezza</button>
+  				<button  style="border-right:1px solid black" " class="tablinks" onclick="switchTab(event, 'Privacy e Sicurezza')">Privacy e Sicurezza</button>
 			</div>
 			
 			<%if(utente.getTipo().equals("partnerSportivo")){%>
@@ -73,16 +79,16 @@
   				<form name="datiSocietaSportiva" action="" method="POST">
   				<input type="text" name="action" id="action" value="" style="display: none;" />
         			<section style="width: 60%;">
-        				<div class="displayTab">
-							<label style="font-weight:600;width:39%;float:left;">Nome Società Sportiva</label>						
+        				<div class="formelement">
+							<label class="registra">Nome Società Sportiva</label>						
 							<input type="text" name="nomeSocieta" value="<%=societa.getNomeSocieta() %>"> 
 						</div>
 						
-						<div class="displayTab">
+						<div class="formelement">
 							<label class="registra">Indirizzo sede</label>	
 							<input type="text" name="indirizzoSede" value="<%=societa.getIndirizzoSede() %>">
 						</div>
-						<div class="displayTab">
+						<div class="formelement">
 							<label class="registra">Partita Iva</label>	
 							<input type="text" name="partitaIva" value="<%=societa.getPartitaIva() %>">
 						</div>
@@ -102,7 +108,7 @@
 					</section>
 						
 					<br><br>
-					<button style="width:15%;"type="submit" name="cambiaDatiPersonali">Cambia</button>
+					<button style="width:20%;"type="submit" name="cambiaDatiPersonali">Cambia</button>
 					<br><br><br><br><br>	
 					</form>	
         		</div>    		
@@ -154,7 +160,7 @@
 	 					</div>
 					</section>	
 					<br><br>
-					<button style="width:15%;"type="submit" name="cambiaDatiPersonali">Cambia</button>
+					<button style="width:20%;"type="submit" name="cambiaDatiPersonali">Cambia</button>
 					<br><br><br>	
 					</form>	
         		</div>    		
@@ -226,8 +232,9 @@
 						}
 					} else {
 				%>
+					
 					<h1>Non ci sono prenotazioni registrate.</h1>
-				
+					
 				<%
 				}
 				%>

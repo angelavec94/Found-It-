@@ -59,7 +59,7 @@ html{
 .container {
 	border-radius: inherit;
 	background-color:azure;
-	width: 100% !important;
+	width: 100%;
 	display: table;
 	border-collapse: collapse;
     padding-right: 1%;
@@ -98,7 +98,6 @@ section{
     max-width: 100%;
     width: 25%;
     font-weight: 700;
-	float:left;
 }
 
 select.campi,input.campi{
@@ -171,7 +170,7 @@ header{
 	margin-left: 6px;
 	background: linear-gradient(141deg, #FF0000 0%, #FF1616 51%, #EE9587 90%);
 	text-align: center;
-	height: 80px !important;
+	height: 80px;
 	position: absolute;
     bottom: 0;  
 }
@@ -251,6 +250,25 @@ div.tabContainer {
 			width: 95%;
 			font-size: small;
 	    }
+	    header{
+    border: 1px solid black;
+	border-radius:40px;
+	width:100%;	
+	margin-left: 6px;
+	margin-right: auto;
+	height: 50px;
+}
+.footer{
+	border: 1px solid black;
+	border-radius:40px;
+	width:95%;
+	margin-left: 6px;
+	background: linear-gradient(141deg, #FF0000 0%, #FF1616 51%, #EE9587 90%);
+	text-align: center;
+	height: 56px;
+	position: absolute;
+    bottom: 0;  
+}
 		
 		select,input.campi{
 			width: 65%;
@@ -261,6 +279,19 @@ div.tabContainer {
 		select{
 			width: 80%;
 		}
+		.container {
+	border-radius: inherit;
+	background-color:azure;
+	width: 100%;
+	display: table;
+	border-collapse: collapse;
+    padding-right: 1%;
+    padding-left: 1%;
+    padding-top: 1%;
+    margin-bottom:1%;
+    margin-right: auto;
+    margin-left: auto;
+}
 		
 		#containerSuperiore {
 			margin-left:auto;
@@ -276,6 +307,17 @@ div.tabContainer {
     	   width: 25%;
     	   font-weight: 600;
 		   float:left;
+		}
+		div.displayTab label.registra {
+			min-width: 50px;
+		}
+		div.displayTab input{
+		font-size:xx-small;
+		width: 65%;
+		padding-right:2%;
+		}
+		div.displayTab label.datiprofilo{
+			min-width: 80px;
 		}
 		img{
 		width: 80px;
@@ -317,25 +359,26 @@ div.tabContainer {
 	body {
 			margin-left: auto;
 			margin-right: auto;
-			width: 110%;
+			width: 90%;
 			font-size: small;
 	    }
 header{
+    border: 1px solid black;
 	border-radius:40px;
 	width:170%;	
-	margin-left: auto;
+	margin-left: 6px;
 	margin-right: auto;
 	height: 50px;
 }
 .footer{
 	border: 1px solid black;
 	border-radius:40px;
-	width:170%;
+	width:96%;
 	margin-left: 6px;
 	background: linear-gradient(141deg, #FF0000 0%, #FF1616 51%, #EE9587 90%);
 	text-align: center;
-	height: 80px !important;
-	position: inherit;
+	height: 60px;
+	position: fixed;
     bottom: 0;  
 }
 .logo{

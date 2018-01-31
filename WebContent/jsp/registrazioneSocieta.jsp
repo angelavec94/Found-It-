@@ -8,7 +8,14 @@
 </head>
 <body>
 <%@include file="header.jsp"%>	
-
+<%if(utente == null || utente.getUsername() == null || !(utente.getTipo().equals("moderatore"))){
+		    ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/jsp/home.jsp");
+			message = "Attenzione! Pagina protetta, effettuare tutti i passaggi per accedervi";
+			request.getSession().setAttribute("message", message);
+			rd.forward(request, response);
+	   };
+	%>
 		<div id="containerSuperiore">
 		<div class="top">
 				<h2><center>REGISTRAZIONE SOCIETA'</center></h2>
