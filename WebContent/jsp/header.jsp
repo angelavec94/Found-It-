@@ -8,9 +8,6 @@
 <!-- Import external css file -->
 <link href="<%=request.getContextPath()%>/style/css/browser.css"
 	rel="stylesheet" type="text/css">
-
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/style/css/browser.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
@@ -18,7 +15,9 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js?ver=1.4.2"></script>
 <script src="<%=request.getContextPath()%>/js/login.js"></script>
-
+	<noscript>
+        <meta http-equiv="refresh" content="0;url=error.jsp"> 
+   </noscript>
 <% String messaggio=(String)request.getSession().getAttribute("message");
 			if(messaggio==null || messaggio.equals("") ){
 				messaggio=(String)request.getAttribute("message");
