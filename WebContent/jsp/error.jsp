@@ -15,7 +15,7 @@
 <body>
 	<header>
 		<div class="logo">
-				<a href="<%=request.getContextPath()%>/jsp/error.jsp"> <img alt="logo sito"
+				<a href="<%=request.getContextPath()%>/jsp/home.jsp"> <img alt="logo sito"
 						src="<%=request.getContextPath()%>/images/logoFoundIt!.png"
 						height="80px" width="180px">
 				</a>
@@ -26,13 +26,13 @@
 			<ul>
 				<li>
 					<div id="loginContainer">
-						<a href="<%=request.getContextPath()%>/jsp/error.jsp" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"> Login</i></a>
+						<a href="#" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"> Login</i></a>
 							<div style="clear: both"></div>
 					</div>
 				</li>
 
 				<li>
-					<a href="<%=request.getContextPath()%>/jsp/error.jsp"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrazione</a>
+					<a href="<%=request.getContextPath()%>/jsp/registrazioneUtente.jsp"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrazione</a>
 				</li>
 			</ul>
 		</nav>
