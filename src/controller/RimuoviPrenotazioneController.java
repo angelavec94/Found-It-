@@ -24,7 +24,7 @@ public class RimuoviPrenotazioneController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		int idPrenotazione=Integer.parseInt(request.getParameter("idPrenotazione"));
-		if(request.getParameter("action").equals("deleteByUtente")){
+		if(request.getParameter("action")!=null&&request.getParameter("action").equals("deleteByUtente")){
 			try {
 				model.doDelete(idPrenotazione);
 				response.sendRedirect(request.getContextPath()+"/jsp/profiloUtente.jsp");

@@ -31,7 +31,7 @@
 		<hr></hr>
 
 		<div class="container">
-			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController">
+			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController" onsubmit="return validateHome()">
 				<div class="container-form-di-ricerca-home">
 					<table>
 						<tr>
@@ -69,6 +69,7 @@
 		<br><br>
 	</div> 
 	<%@include file="footer.jsp"%>
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
     <script src="../js/logger.js"></script>
 </body>
 </html>

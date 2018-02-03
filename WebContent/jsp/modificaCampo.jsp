@@ -9,8 +9,17 @@
 <title>Found It! | Modifica Campo</title>
 </head>
 <body>
-<%@include file="header.jsp"%>	
+<%@include file="header.jsp"%>
+<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 	<%@page import="java.util.*,model.CampoSportivoBean,model.CampoSportivoModel,model.CampoSportivoModelDM"%>
+	<% if(utente==null || utente.getUsername() == null){
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
+		message = "Effettuare il login prima di poter accedere a questa pagina!";
+		request.getSession().setAttribute("message", message);
+		rd.forward(request, response);
+	}
+%>
 	<%
 		CampoSportivoModel model=new CampoSportivoModelDM();
 		CampoSportivoBean bean=model.doRetrieveByKey((int)request.getAttribute("idCampo"));
@@ -21,7 +30,7 @@
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
 		<div  align="center" class="container">
-			<form name="ModificaCampo" action="<%=request.getContextPath()%>/ModificaCampoController" method="POST">
+			<form name="ModificaCampo" action="<%=request.getContextPath()%>/ModificaCampoController" method="POST" onsubmit="return validateModificaCampo()">
 			<div style= "width:50%;">
 				<br><br>
 				<div class="formelement">
@@ -78,5 +87,6 @@
 	
 	
 	<%@include file="footer.jsp"%>
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 </body>
 </html>

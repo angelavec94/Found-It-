@@ -13,10 +13,11 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
+<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 <% if(utente==null || utente.getUsername() == null){
 		ServletContext sc = getServletContext();
 		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
-		message = "Effettuare il login prima di accedere al profilo utente!";
+		message = "Effettuare il login prima di poter accedere a questa pagina!";
 		request.getSession().setAttribute("message", message);
 		rd.forward(request, response);
 	}
@@ -28,25 +29,25 @@
 		</div>
 		<hr style= "margin-left:1%; margin-right:1%">
 		<div  align="center" class="container">
-			<form name="aggiungiCampo" action="<%=request.getContextPath()%>/AggiungiCampoController" method="POST">
+			<form name="aggiungiCampo" action="<%=request.getContextPath()%>/AggiungiCampoController" method="GET" onsubmit="return validateAggiungiCampo()">
 			<div style= "width:50%;">
 				<br><br>
-				<div class="formelement">
+				<div name="nomeCampo" class="formelement">
 					<label  class="registra">Nome</label>
 					<input class="campi" type="text" name="nomeCampo" placeholder=" inserisci nome campo">
 				</div>
 
-				<div class="formelement">
+				<div name="fasciaOraria" class="formelement">
 					<label  class="registra">Fascia oraria</label>
 				 	<input class="campi" type="text" name="fasciaOraria" placeholder=" inserisci fascia oraria(Formato hh-hh)">
 				</div>
 
-				<div class="formelement">
+				<div name="luogo" class="formelement">
 					<label  class="registra">Luogo</label> 
 					<input id="geocomplete" class="campi" type="text" size="40" name="luogo" placeholder=" inserisci un luogo"/>
 				</div>
 
-				<div class="formelement">
+				<div name="tipo" class="formelement">
 					<label  class="registra">Tipologia</label> 
 					<select name="tipo">
 							<option value="calcio">calcio</option>
@@ -56,12 +57,12 @@
 					</select>
 				</div>
 
-				<div class="formelement">
+				<div name="prezzoOnline" class="formelement">
 					<label  class="registra">Prezzo Online</label>
 				 	<input class="campi" type="text" name="prezzoOnline"  placeholder=" inserisci il prezzo online">
 				</div>
 				
-				<div class="formelement">
+				<div  class="formelement">
 					<label  class="registra">Prezzo sul Campo</label>
 				 	<input class="campi" type="text" name="prezzoSulCampo"  placeholder=" inserisci il prezzo sul campo">
 				 	<input name="partitaIva" value="<%=request.getSession().getAttribute("partitaIva")%>" type="hidden"/>
@@ -83,5 +84,6 @@
 	
 	
 	<%@include file="footer.jsp"%>
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 </body>
 </html>

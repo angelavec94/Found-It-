@@ -49,7 +49,7 @@
  	<%	Collection<CampoSportivoBean> risultatiRicerca = (Collection<CampoSportivoBean>) request.getSession().getAttribute("risultatiRicerca");%>
 	<div id="containerSuperiore">
 		<div class="container">
-			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController">
+			<form class="form-di-ricerca-home" name="formRicerca" method="GET" action="<%=request.getContextPath()%>/RicercaController" onsubmit="return validateHome()">
 				<div class="sideBarDiRicerca">
 					<label>Quale sport vuoi praticare?</label>
 					<select name="tipo" class="inSideBar">	
@@ -124,7 +124,7 @@
 			</div>
 		</div>
 	<%@include file="footer.jsp"%>
-	
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCofJoxoB2qURli3Js_1iUFjixonLuqk-M&sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 

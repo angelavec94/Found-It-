@@ -6,7 +6,8 @@ var regex  = {
 		username:"^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" ,
 		password:"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9$@$!%*?&]{8,30}" , nomeSocieta:"^(?=.{3,25}$)^[A-Za-zèùàòé][a-zA-Z'èùàòé .]*$"
 		,indirizzoSede:"^(?=.{3,25}$)^[A-Za-zèùàòéZ0-9\s\,\''\-.° ]*$" ,partitaIva:"^[0-9]{11}$"
-		, codiceAutenticazione:"^[0-9]{0,24}$"
+		, codiceAutenticazione:"^[0-9]{0,24}$", ora:"^([01][0-9]|2[0-3]|[1-9])$", minuti:"^([0-5][0-9])$", numeroCarta:"^[0-9]{16}$", cvvCarta:"^[0-9]{4}$"
+		, fascia:"^([01][0-9]|2[0-3]|[1-9])+-+([01][0-9]|2[0-3]|[1-9])$", prezzo:"^([0-9]|[0-9]+.+[0-9])$"
 		}
 
 
@@ -217,10 +218,148 @@ function validateDatiPersonali(){
 	return true;
 }
 
+function validateHome(){
+	var luogo=document.formRicerca.luogo.value;
+	var ora=document.formRicerca.ora.value;
+	var minuti=document.formRicerca.minuti.value;
+	var data=document.formRicerca.data.value;
+	
+	if (isEmpty(luogo,"luogo")){
+		return false;
+	}
+	if (!isAValidString(luogo,regex.citta,"luogo")){
+		return false;
+	}
+	if (isEmpty(data,"data")){
+		return false;
+	}
+	if (isEmpty(ora,"ora")){
+		return false;
+	}
+	if (!isAValidString(ora,regex.ora,"ora")){
+		return false;
+	}
+	if (isEmpty(minuti,"minuti")){
+		return false;
+	}
+	if (!isAValidString(minuti,regex.minuti,"minuti")){
+		return false;
+	}
+	return true;
+}
 
+function validateCarta(){
+	var numero=document.formRegistraCarta.numeroCarta.value;
+	var intestatario=document.formRegistraCarta.intestatarioCarta.value;
+	var scadenza=document.formRegistraCarta.scadenzaCarta.value;
+	var cvv=document.formRegistraCarta.cvvCarta.value;
+	
+	if (isEmpty(numero,"numero")){
+		return false;
+	}
+	if (!isAValidString(numero,regex.numeroCarta,"numero")){
+		return false;
+	}
+	if (isEmpty(intestatario,"intestatario")){
+		return false;
+	}
+	if (!isAValidString(intestatario,regex.nome,"intestatario")){
+		return false;
+	}
+	if (isEmpty(scadenza,"scadenza")){
+		return false;
+	}
+	if (isEmpty(cvv,"cvv")){
+		return false;
+	}
+	if (!isAValidString(cvv,regex.cvvCarta,"cvv")){
+		return false;
+	}
+	return true;
+}
+
+function validateAggiungiCampo(){
+	var nome=document.aggiungiCampo.nomeCampo.value;
+	var fascia=document.aggiungiCampo.fasciaOraria.value;
+	var luogo=document.aggiungiCampo.luogo.value;
+	var prezzoOnline=document.aggiungiCampo.prezzoOnline.value;
+	var prezzoSulCampo=document.aggiungiCampo.prezzoSulCampo.value;
+	
+	if (isEmpty(nome,"nome")){
+		return false;
+	}
+	if (!isAValidString(nome,regex.nome,"nome")){
+		return false;
+	}
+	if (isEmpty(fascia,"fascia")){
+		return false;
+	}
+	if (!isAValidString(fascia,regex.fascia,"fascia")){
+		return false;
+	}
+	if (isEmpty(luogo,"luogo")){
+		return false;
+	}
+	if (!isAValidString(luogo,regex.citta,"luogo")){
+		return false;
+	}
+	if (isEmpty(prezzoOnline,"prezzoOnline")){
+		return false;
+	}
+	if (!isAValidString(prezzoOnline,regex.prezzo,"prezzoOnline")){
+		return false;
+	}
+	if (isEmpty(prezzoSulCampo,"prezzoSulCampo")){
+		return false;
+	}
+	if (!isAValidString(prezzoSulCampo,regex.prezzo,"prezzoSulCampo")){
+		return false;
+	}
+	return true;
+}
+
+function validateModificaCampo(){
+	var nome=document.ModificaCampo.nomeCampo.value;
+	var fascia=document.ModificaCampo.fasciaOraria.value;
+	var luogo=document.ModificaCampo.luogo.value;
+	var prezzoOnline=document.ModificaCampo.prezzoOnline.value;
+	var prezzoSulCampo=document.ModificaCampo.prezzoSulCampo.value;
+	
+	if (isEmpty(nome,"nome")){
+		return false;
+	}
+	if (!isAValidString(nome,regex.nome,"nome")){
+		return false;
+	}
+	if (isEmpty(fascia,"fascia")){
+		return false;
+	}
+	if (!isAValidString(fascia,regex.fascia,"fascia")){
+		return false;
+	}
+	if (isEmpty(luogo,"luogo")){
+		return false;
+	}
+	if (!isAValidString(luogo,regex.citta,"luogo")){
+		return false;
+	}
+	if (isEmpty(prezzoOnline,"prezzoOnline")){
+		return false;
+	}
+	if (!isAValidString(prezzoOnline,regex.prezzo,"prezzoOnline")){
+		return false;
+	}
+	if (isEmpty(prezzoSulCampo,"prezzoSulCampo")){
+		return false;
+	}
+	if (!isAValidString(prezzoSulCampo,regex.prezzo,"prezzoSulCampo")){
+		return false;
+	}
+	return true;
+}
 
 function isEmpty(aString,nomeCampo){
-	if (aString == null || aString == "" || aString.trim() == "") 
+	if (aString == null || aString == "" || aString.trim() == "" || aString == undefined) 
 	{
         alert("Errore: Campo "+nomeCampo+" vuoto!");
         return true;
@@ -229,7 +368,7 @@ function isEmpty(aString,nomeCampo){
 
 }
 
-function isAValidString(aString, aRegex, nomeCampo){ 
+function isAValidString(aString, aRegex, nomeCampo){
 	if(!aString.match(aRegex)){
 		alert("Errore: "+nomeCampo+" non valido!");
 		return false;

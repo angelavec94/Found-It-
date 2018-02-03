@@ -35,6 +35,14 @@
 <%@include file="header.jsp"%>
 <%@page import="model.CampoSportivoBean,java.util.*,model.CampoSportivoModel,model.CampoSportivoModelDM,model.UtenteBean"%>
 <div id="containerSuperiore">
+<% if(utente==null || utente.getUsername() == null){
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
+		message = "Effettuare il login prima di poter accedere a questa pagina!";
+		request.getSession().setAttribute("message", message);
+		rd.forward(request, response);
+	}
+%>
 			<%
 			UtenteBean partner = (UtenteBean)request.getSession().getAttribute("login");
 			request.getSession().setAttribute("partitaIva", partner.getSocietaSportiva_PartitaIva());

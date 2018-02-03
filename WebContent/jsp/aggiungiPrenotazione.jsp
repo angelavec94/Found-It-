@@ -18,11 +18,20 @@
 <body>
 <%@page import="java.sql.Date,java.sql.Time,java.util.*" %>
 <%@include file="header.jsp"%>
+<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testGestionePrenotazione.js"></script>
+<% if(utente==null || utente.getUsername() == null){
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
+		message = "Effettuare il login prima di poter accedere a questa pagina!";
+		request.getSession().setAttribute("message", message);
+		rd.forward(request, response);
+	}
+%>
 	<div id="containerSuperiore">
 		<div  align="center" class="container">
-			<form name="formCalcolaOra" method="GET" action="<%=request.getContextPath()%>/CalcolaOraController " style="margin-top:2%" >
+			<form name="formCalcolaOra" method="GET" action="<%=request.getContextPath()%>/CalcolaOraController" style="margin-top:2%" onsubmit="return validateAggiungiPrenotazione()">
 			Data: 
-			<input name="data" type="text" placeholder="yyyy-mm-dd" id="datepicker" onchange="javascript:document.formCalcolaOra.submit();">
+			<input name="data" type="text" placeholder="yyyy-mm-dd" id="datepicker">
 			<input name="idCampo" value="<%=request.getAttribute("idCampo") %>" type="hidden"/>
 			<input name="cfPartner" value="<%=request.getAttribute("cfPartner") %>" type="hidden"/>
 			</form>
@@ -31,7 +40,7 @@
 					request.setAttribute("calcola", null);
 					ArrayList<String> orari=(ArrayList<String>)request.getAttribute("risultati");
 			%>
-					<form name="formCalcolaOra" method="GET" action="<%=request.getContextPath()%>/AggiungiPrenotazioneController">
+					<form name="formCalcolatuamadreputtana" method="GET" action="<%=request.getContextPath()%>/AggiungiPrenotazioneController" onsubmit="return validateAggiungiPrenotazione()">
 					<select name="orario">
 						<% for(String s:orari){%>
 							<option value=<%=s%>><%=s%></option>
@@ -50,6 +59,7 @@
 		</div>
 	</div>
 <%@include file="footer.jsp"%>
+<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testGestionePrenotazione.js"></script>
 <!--<script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>

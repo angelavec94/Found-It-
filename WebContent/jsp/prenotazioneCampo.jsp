@@ -45,6 +45,14 @@
 <%@include file="header.jsp"%>
 	<%@page import="model.CampoSportivoBean,java.util.*,model.SocietaSportivaBean,model.SocietaSportivaModel,model.SocietaSportivaModelDM,model.UtenteBean"%>
 	<%@page import="model.CartaBean,model.CartaModel,model.CartaModelDM,model.UtenteModel,model.UtenteModelDM"%>
+	<% if(utente==null || utente.getUsername() == null){
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
+		message = "Effettuare il login prima di poter accedere a questa pagina!";
+		request.getSession().setAttribute("message", message);
+		rd.forward(request, response);
+	}
+	%>
 	<%CampoSportivoBean bean = (CampoSportivoBean)request.getSession().getAttribute("campoDaPrenotare");%>
 	<%int ora=(int)request.getSession().getAttribute("oraPrenotazione");%>
 	<div id="containerSuperiore">
@@ -80,15 +88,15 @@
 						} else {
 							%>
 							<h3>Per procedere al pagamento registrare una carta!</h3>
-							<form name="formRegistraCarta" method="GET" action="<%=request.getContextPath()%>/CartaController">
+							<form name="formRegistraCarta" method="GET" action="<%=request.getContextPath()%>/CartaController" onsubmit="return validateCarta()">
 							Numero Carta:
-							<input name="numeroCarta" type="text"><br>
+							<input name="numeroCarta" type="text" placeholder="16 numeri"><br>
 							Intestatario:
 							<input name="intestatarioCarta" type="text"><br>
 							Scadenza:
 							<input name="scadenzaCarta" type="date"><br>
 							CVV/CVV2:
-							<input name="cvvCarta" type="number" ><br>
+							<input name="cvvCarta" type="number" placeholder="4 numeri"><br>
 							<input name="cfUtente" value="<%=utent.getCodiceFiscale() %>" type="hidden"/>
 							<input type="submit" value="Conferma Dati">
 							</form>
@@ -117,5 +125,6 @@
 		</div>
 	</div>
 	<%@include file="footer.jsp"%>
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
 </body>
 </html>

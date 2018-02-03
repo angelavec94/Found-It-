@@ -34,6 +34,14 @@
 <body>
 <%@include file="header.jsp"%>
 <%@page import="model.PrenotazioneBean,java.util.*,model.PrenotazioneModel,model.PrenotazioneModelDM"%>
+<% if(utente==null || utente.getUsername() == null){
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd= sc.getRequestDispatcher("/jsp/home.jsp");
+		message = "Effettuare il login prima di poter accedere a questa pagina!";
+		request.getSession().setAttribute("message", message);
+		rd.forward(request, response);
+	}
+%>
 <div id="containerSuperiore" style="overflow:auto">
 			<div class="containerRisultati">
 				<% 

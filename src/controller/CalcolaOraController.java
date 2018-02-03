@@ -67,6 +67,9 @@ public class CalcolaOraController extends HttpServlet{
 					PrenotazioneBean bean=it.next();
 					if(bean.getData().compareTo(data)==0){
 					String toCheck=(bean.getOra().toString().split(":"))[0];
+					if(Integer.parseInt(toCheck)<10){
+						toCheck=toCheck.substring(1);
+					}
 					ArrayList<String> checkArray=(ArrayList<String>)toReturn.clone();
 						for(String s:checkArray){
 							if(s.equals(toCheck)){
