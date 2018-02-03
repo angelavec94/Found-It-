@@ -157,66 +157,6 @@ function validateSocieta(){
 	}
 	return true;
 }
-function validateDatiPersonali(){
-	
-	var nome = document.datiPersonali.nome.value;
-	alert(nome)
-	var cognome = document.datiPersonali.cognome.value;
-	alert(cognome)
-	var codicefiscale= document.datiPersonali.codicefiscale.value;
-	alert(codicefiscale)
-	var citta = document.datiPersonali.citta.value;
-	alert(citta)
-	var provincia = document.datiPersonali.activityProvince.value;
-	alert(provincia)
-	var cap = document.datiPersonali.cap.value;
-	alert(cap)
-	var telefono = document.datiPersonali.telefono.value;
-	alert(telefono)
-	if (isEmpty(nome,"nome")){
-		return false;
-	}
-	if (!isAValidString(nome,regex.nome,"nome")){
-		return false;
-	}
-	if (isEmpty(cognome,"cognome")){
-		return false;
-	}
-	if (!isAValidString(cognome,regex.cognome,"cognome")){
-		return false;
-	}
-	if (isEmpty(codicefiscale,"codicefiscale")){
-		return false;
-	}
-	if (!isAValidString(codicefiscale,regex.codicefiscale,"codicefiscale")){
-		return false;
-	}
-	if (isEmpty(citta,"citta")){
-		return false;
-	}
-	if (!isAValidString(citta,regex.citta,"citta")){
-		return false;
-	}
-	if (isEmpty(provincia,"provincia")){
-		return false;
-	}
-	if (!isAValidString(provincia,regex.provincia,"provincia")){
-		return false;
-	}
-	if (isEmpty(cap,"cap")){
-		return false;
-	}
-	if (!isAValidString(cap,regex.cap,"cap")){
-		return false;
-	}
-	if (isEmpty(telefono,"telefono")){
-		return false;
-	}
-	if (!isAValidString(telefono,regex.telefono,"telefono")){
-		return false;
-	}
-	return true;
-}
 
 function validateHome(){
 	var luogo=document.formRicerca.luogo.value;
