@@ -101,10 +101,7 @@
 				 	<input type="text" name="telefono" value="<%=societa.getTelefono() %>">
 				    </div>
 
-					<div class="formelement">
-					<label class="registra">Codice di autenticazione</label>
-				 	<input type="text" name="codiceAutenticazione" value="<%=societa.getCodiceAutenticazione() %>">				 
-   					</div>	
+						
 					</section>
 						
 					<br><br>

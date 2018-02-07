@@ -42,11 +42,6 @@
 				 	<i class="fa fa-phone"></i>
 				</div>
 
-				<div class="formelement">
-					<label  class="registra">Codice di autenticazione<span style="color: #FF0000">*<br>(Servirà nel caso si voglia registrare un impiegato)</span></label>
-				 	<input class="campi" type="text" name="codiceAutenticazione" placeholder=" inserisci il codice di Autenticazione">				 
-   				</div>
-
 				<br><br><br><br>
 				<input name="CodiceFiscaleUtente" value="<%= request.getAttribute("CodiceFiscaleUtente")%>" type="hidden"/>
 				<div style="text-align:center;">
