@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.SocietaSportivaBean;
 import model.SocietaSportivaModel;
@@ -50,6 +51,7 @@ public class SocietaController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String codiceFiscale= request.getParameter("CodiceFiscaleUtente");
 		 UtenteBean utente = new UtenteBean();
+		 
 		 try {
 			utente= modelUtente.doRetrieveByKey(codiceFiscale);
 		 }catch (SQLException e) {
@@ -64,40 +66,14 @@ public class SocietaController extends HttpServlet {
 			String telefonoSocieta= request.getParameter("telefono");
 			String codiceAutenticazione= request.getParameter("codiceAutenticazione");
 			
-			if( ValidationUtil.isEmpty(nomeSocieta) || !ValidationUtil.isAValidString(nomeSocieta,ValidationUtil.REGEX_NOME_SOCIETA)){
-				out.println("<script type=\"text/javascript\">");
-			    out.println("alert('Errore: nome Società non inserito oppure non valido!');");
-			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
-			    out.println("</script>");
-			}
-			 if( ValidationUtil.isEmpty(indirizzoSede) || !ValidationUtil.isAValidString(indirizzoSede,ValidationUtil.REGEX_INDIRIZZO_SEDE)){
-				out.println("<script type=\"text/javascript\">");
-			    out.println("alert('Errore: indirizzo sede non inserito oppure non valido!');");
-			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
-			    out.println("</script>");
-			}
-			if( ValidationUtil.isEmpty(partitaIva) || !ValidationUtil.isAValidString(partitaIva,ValidationUtil.REGEX_PARTITA_IVA)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: partita iva non inserita oppure non valida!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
-				    out.println("</script>");
-				}
-			 if( ValidationUtil.isEmpty(telefonoSocieta) || !ValidationUtil.isAValidString(telefonoSocieta,ValidationUtil.REGEX_TELEFONO)){
-				out.println("<script type=\"text/javascript\">");
-			    out.println("alert('Errore: telefono non inserito oppure non valido!');");
-			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
-			    out.println("</script>");
-			}
-			 if( ValidationUtil.isEmpty(codiceAutenticazione) || !ValidationUtil.isAValidString(codiceAutenticazione,ValidationUtil.REGEX_CODICE_AUTENTICAZIONE)){
-				out.println("<script type=\"text/javascript\">");
-			    out.println("alert('Errore: Codice di Autenticazione non inserito oppure non valido!');");
-			    out.println("location='"+request.getContextPath()+"/jsp/registrazioneSocieta.jsp';");
-			    out.println("</script>");
+			SocietaSportivaBean societaDb= new SocietaSportivaBean();
+			try {
+				societaDb = modelSocieta.doRetrieveByKey(partitaIva);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 			
-			
-			
-			utente.setSocietaSportiva_PartitaIva(partitaIva);
+
 			
 			societa.setNomeSocieta(nomeSocieta);
 			societa.setIndirizzoSede(indirizzoSede);
@@ -106,13 +82,38 @@ public class SocietaController extends HttpServlet {
 			societa.setCodiceAutenticazione(codiceAutenticazione);
 			
 				try {
-					modelSocieta.doSave(societa);
-					modelUtente.doUpdate(utente);
+					if(societaDb==null){
+						modelSocieta.doSave(societa);
+						utente= (UtenteBean) request.getSession().getAttribute("utenteSalvato");
+						utente.setSocietaSportiva_PartitaIva(partitaIva);
+						modelUtente.doUpdate(utente);
+						String message = "Società Sportiva Registrata!";
+						request.getSession().setAttribute("message", message);
+						response.sendRedirect(request.getContextPath() + "/jsp/home.jsp");
+			
+					}else if(societa.getPartitaIva().equals(societaDb.getPartitaIva())){	
+						String message = "Partita Iva già presente nel database!";
+						request.getSession().setAttribute("message", message);	
+						String redirectedPage = "/jsp/registrazioneSocieta.jsp";
+						response.sendRedirect(request.getContextPath() + redirectedPage);
+				
+					}
+					else{
+						modelSocieta.doSave(societa);
+						utente= (UtenteBean) request.getSession().getAttribute("utenteSalvato");
+						utente.setSocietaSportiva_PartitaIva(partitaIva);
+						modelUtente.doUpdate(utente);
+						String message = "Società Sportiva Registrata!";
+						request.getSession().setAttribute("message", message);
+						response.sendRedirect(request.getContextPath() + "/jsp/home.jsp");
+			
+					}
+					
+					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				response.sendRedirect(request.getContextPath() + "/jsp/home.jsp");
-	
+				
 		}
 
 }

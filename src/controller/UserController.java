@@ -67,7 +67,14 @@ public class UserController extends HttpServlet {
 				String username = request.getParameter("username");
 				String password = request.getParameter("password");
 				String possiediSocietaSportiva = request.getParameter("possiedisocietasportiva");
-								
+				
+				UtenteBean utenteDb= new UtenteBean();
+				try {
+					utenteDb = modelUtente.doRetrieveByKey(codicefiscale);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
 				utente.setNome(nome);
 				utente.setCognome(cognome);
 				utente.setCodiceFiscale(codicefiscale);
@@ -84,30 +91,63 @@ public class UserController extends HttpServlet {
 				if(possiediSocietaSportiva.equals("no")){
 					utente.setTipo("utenteSemplice");		
 					try{
-						
+						if(utenteDb==null){
+							modelUtente.doSave(utente);
+							String message = "Registrazione Utente effettuata con successo!";
+							request.getSession().setAttribute("message", message);	
+							String redirectedPage = "/jsp/home.jsp";
+							response.sendRedirect(request.getContextPath() + redirectedPage);
+						}else if(utente.getCodiceFiscale().equals(utenteDb.getCodiceFiscale())){	
+							String message = "Codice fiscale già presente nel database!";
+							request.getSession().setAttribute("message", message);	
+							String redirectedPage = "/jsp/registrazioneUtente.jsp";
+							response.sendRedirect(request.getContextPath() + redirectedPage);
+					
+						}
+						else{
 						modelUtente.doSave(utente);
+						String message = "Registrazione Utente effettuata con successo!";
+						request.getSession().setAttribute("message", message);	
+						String redirectedPage = "/jsp/home.jsp";
+						response.sendRedirect(request.getContextPath() + redirectedPage);
+						}
 						
 					} 
 					catch(Exception e) 
 					{
 						e.printStackTrace();
 					}
-					String message = "Registrazione effettuata con successo!";
-					request.getSession().setAttribute("message", message);	
-					String redirectedPage = "/jsp/home.jsp";
-					response.sendRedirect(request.getContextPath() + redirectedPage);
+					
 			
 				}
 				else if(possiediSocietaSportiva.equals("si")){
 					utente.setTipo("partnerSportivo");
 					try {
-						modelUtente.doSave(utente);
+						if(utenteDb==null){
+							modelUtente.doSave(utente);
+							String message = "Registrazione Partner Sportivo effettuata con successo!";
+							request.getSession().setAttribute("utenteSalvato",utente);
+							request.getSession().setAttribute("message", message);	
+							request.setAttribute("CodiceFiscaleUtente", utente.getCodiceFiscale());
+							request.getRequestDispatcher("/jsp/registrazioneSocieta.jsp").forward(request, response);
+									
+						}else if(utente.getCodiceFiscale().equals(utenteDb.getCodiceFiscale())){	
+								String message = "Codice fiscale già presente nel database!";
+								request.getSession().setAttribute("message", message);	
+								String redirectedPage = "/jsp/registrazioneUtente.jsp";
+								response.sendRedirect(request.getContextPath() + redirectedPage);
+							  }else{
+								modelUtente.doSave(utente);
+								String message = "Registrazione Partner Sportivo effettuata con successo!";
+								request.getSession().setAttribute("message", message);	
+								request.setAttribute("CodiceFiscaleUtente", utente.getCodiceFiscale());
+								request.getRequestDispatcher("/jsp/registrazioneSocieta.jsp").forward(request, response);
+								
+							  }	
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-					 request.setAttribute("CodiceFiscaleUtente", utente.getCodiceFiscale());
-					 request.getRequestDispatcher("/jsp/registrazioneSocieta.jsp").forward(request, response);
-					
+					 
 				}
 		     }
 
@@ -214,6 +254,7 @@ public class UserController extends HttpServlet {
 						 if(!(utenteSessione.equals(utente))){
 							 try {
 								 modelUtente.doUpdate(utente);
+								 request.getSession().setAttribute("login",utente);
 							 } catch (SQLException e) {
 								 e.printStackTrace();
 							 }
@@ -266,6 +307,45 @@ public class UserController extends HttpServlet {
 							 String redirectedPage = "/jsp/profiloUtente.jsp";
 							 response.sendRedirect(request.getContextPath() + redirectedPage);
 						}
+						
+						// MODIFICA TAB DATI SOCIETA SPORTIVA IN PROFILO UTENTE
+						if (action.equalsIgnoreCase("datiSocietaSportiva")) {
+							action="";
+							HttpSession session = request.getSession();
+							SocietaSportivaBean societaSessione= (SocietaSportivaBean) session.getAttribute("societa");
+							
+							// Copio tutti i parametri di input nelle variabili locali
+							String nomeSocieta= request.getParameter("nomeSocieta");
+							String indirizzoSede= request.getParameter("indirizzoSede");
+							String partitaIva= request.getParameter("partitaIva");
+							String telefonoSocieta= request.getParameter("telefono");
+							String codiceAutenticazione= request.getParameter("codiceAutenticazione");
+							 							
+							 
+							 if(societa!=null){
+								 societa.setNomeSocieta(nomeSocieta);
+								 societa.setIndirizzoSede(indirizzoSede);
+								 societa.setPartitaIva(partitaIva);
+								 societa.setTelefono(telefonoSocieta);
+								 societa.setCodiceAutenticazione(codiceAutenticazione);
+								 
+							 }
+							 if(!(societa.equals(societaSessione))){
+								 try {
+									 modelSocieta.doUpdate(societa);
+									 request.getSession().setAttribute("societa",societa);
+
+								 } catch (SQLException e) {
+									 e.printStackTrace();
+								 }
+								 societaSessione= societa;			 
+							 }
+							 String message = "Dati Societa Modificati!";
+								request.getSession().setAttribute("message", message);
+							 String redirectedPage = "/jsp/profiloUtente.jsp";
+							 response.sendRedirect(request.getContextPath() + redirectedPage);
+						}
+					
 						
 				
 	

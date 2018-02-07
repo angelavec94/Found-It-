@@ -76,8 +76,8 @@
 			<div align="center" id="Dati Societa Sportiva" class="tabcontent">
 			<h2>Dati Società Sportiva</h2>
   				<div>
-  				<form name="datiSocietaSportiva" action="" method="POST">
-  				<input type="text" name="action" id="action" value="" style="display: none;" />
+  				<form name="datiSocietaSportiva" action="<%=request.getContextPath()%>/UserController" method="POST" onsubmit="return validateDatiSocieta()">
+  				<input type="text" name="action" id="action" value="datiSocietaSportiva" style="display: none;" />
         			<section style="width: 60%;">
         				<div class="formelement">
 							<label class="registra">Nome Società Sportiva</label>						
@@ -90,7 +90,7 @@
 						</div>
 						<div class="formelement">
 							<label class="registra">Partita Iva</label>	
-							<input type="text" name="partitaIva" value="<%=societa.getPartitaIva() %>">
+							<input type="text" name="partitaIva" readonly="readonly" value="<%=societa.getPartitaIva() %>">
 						</div>
 					</section>
 							
@@ -170,7 +170,7 @@
   				<h2>Dati Account</h2>
   				
   				<div style="width: 50%; margin-left: auto; margin-right: auto;">
-  					<form name="datiAccount" action="<%=request.getContextPath()%>/UserController" method="POST">
+  					<form name="datiAccount" action="<%=request.getContextPath()%>/UserController" method="POST" onsubmit="return validateDatiAccount()">
   					<input type="text" name="action" id="action" value="datiAccount" style="display: none;" />
   					<div class="displayTab">
 						<label  class="datiprofilo">Username</label>
@@ -274,37 +274,8 @@
     		evt.currentTarget.className += " active";
 		}
 		document.getElementById("defaultOpen").click();
-		
-		
-		function validateDatiProfilo(){
-			var password = document.datiProfilo.password.value;
-			var confpassword = document.datiProfilo.confpassword.value;
-			var email = document.datiProfilo.email.value;
-			
-			if (isEmpty(password,"password")){
-				return false;
-			}
-			if (!isAValidString(password,regex.password,"password")){
-				return false;
-			}
-			if (isEmpty(confpassword,"confpassword")){
-				return false;
-			}
-			if (!(confpassword == password)){
-				alert("Errore: I campi password e conferma password devono corrispondere!")
-				return false;
-			}
-			if (isEmpty(email,"email")){
-				return false;
-			}
-			if (!isAValidString(email,regex.email,"email")){
-				return false;
-			}
-		
-			return true;
-		}
 	</script>
-	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testModifica.js"></script>
 	
 </body>
 </html>
