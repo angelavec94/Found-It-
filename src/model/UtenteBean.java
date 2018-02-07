@@ -146,10 +146,20 @@ public class UtenteBean implements Cloneable {
 		if (o == null) return false;
 		if (getClass() != o.getClass())return false;
 		UtenteBean ut = (UtenteBean) o;
+		if(this.getTipo().equals("utenteSemplice") || this.getTipo().equals("moderatore")){
 		return getNome().equals(ut.nome)&& getCognome().equals(ut.cognome)&& getCodiceFiscale().equals(ut.codiceFiscale) &&
 			   getCitta().equals(ut.citta)&& getProvincia().equals(ut.provincia)&& getCap()==ut.cap && getTelefono().equals(ut.telefono)
-			   && getEmail().equals(ut.email)&& getUsername().equals(ut.username)&& getPassword().equals(ut.password) && getSocietaSportiva_PartitaIva().equals(ut.societaSportiva_PartitaIva)&& getNumeroCarta().equals(ut.numeroCarta);
-	}
+			   && getEmail().equals(ut.email)&& getUsername().equals(ut.username)&& getPassword().equals(ut.password) &&
+			   getSocietaSportiva_PartitaIva()==null && ut.societaSportiva_PartitaIva==null && ((getNumeroCarta()==null && ut.numeroCarta==null) || getNumeroCarta().equals(ut.numeroCarta));
+		}
+		else if(this.getTipo().equals("partnerSportivo")){
+			return getNome().equals(ut.nome)&& getCognome().equals(ut.cognome)&& getCodiceFiscale().equals(ut.codiceFiscale) &&
+			   getCitta().equals(ut.citta)&& getProvincia().equals(ut.provincia)&& getCap()==ut.cap && getTelefono().equals(ut.telefono)
+			   && getEmail().equals(ut.email)&& getUsername().equals(ut.username)&& getPassword().equals(ut.password) &&
+			   getSocietaSportiva_PartitaIva().equals(ut.societaSportiva_PartitaIva) && ((getNumeroCarta()==null && ut.numeroCarta==null) || getNumeroCarta().equals(ut.numeroCarta));
+		}
+		return false;
+		}
 	/*
 	 * Override clone di Object
 	 */

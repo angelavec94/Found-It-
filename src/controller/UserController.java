@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -19,7 +18,6 @@ import model.UtenteModelDM;
 import model.SocietaSportivaBean;
 import model.SocietaSportivaModelDM;
 import model.SocietaSportivaModel;
-import util.ValidationUtil;
 
 /**
  * Servlet implementation class UserController
@@ -51,7 +49,6 @@ public class UserController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
 		UtenteBean utente = new UtenteBean();
 		SocietaSportivaBean societa= new SocietaSportivaBean();
 		String action = request.getParameter("action");
@@ -69,82 +66,8 @@ public class UserController extends HttpServlet {
 				String email = request.getParameter("email");
 				String username = request.getParameter("username");
 				String password = request.getParameter("password");
-				String confpassword= request.getParameter("confpassword");
 				String possiediSocietaSportiva = request.getParameter("possiedisocietasportiva");
-				
-				if( ValidationUtil.isEmpty(nome) || !ValidationUtil.isAValidString(nome,ValidationUtil.REGEX_NOME)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: nome non inserito oppure non valido!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(cognome) || !ValidationUtil.isAValidString(cognome,ValidationUtil.REGEX_GENERALE)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: cognome non inserito oppure non valido!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(codicefiscale) || !ValidationUtil.isAValidString(codicefiscale,ValidationUtil.REGEX_CODICE_FISCALE)){
-						out.println("<script type=\"text/javascript\">");
-					    out.println("alert('Errore: codice fiscale non inserita oppure non valida!');");
-					    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-					    out.println("</script>");
-					}
-				 if( ValidationUtil.isEmpty(citta) || !ValidationUtil.isAValidString(citta,ValidationUtil.REGEX_GENERALE)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: citta' non inserita oppure non valida!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(provincia) || !ValidationUtil.isAValidString(provincia,ValidationUtil.REGEX_GENERALE)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: provincia non inserita oppure non valida!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(cap) || !ValidationUtil.isAValidString(cap,ValidationUtil.REGEX_CAP)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: cap non inserito oppure non valido!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(telefono) || !ValidationUtil.isAValidString(telefono,ValidationUtil.REGEX_TELEFONO)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: telefono non inserito oppure non valido!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(email) || !ValidationUtil.isAValidString(email,ValidationUtil.REGEX_EMAIL)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: email non inserita oppure non valida!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(username) || !ValidationUtil.isAValidString(username,ValidationUtil.REGEX_USERNAME)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: username non inserito oppure non valido!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if( ValidationUtil.isEmpty(password) || !ValidationUtil.isAValidString(password,ValidationUtil.REGEX_PASSWORD)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: password non inserita oppure non valida!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if(!confpassword.equals(password)){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: I campi password e conferma password devono corrispondere!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				 if(possiediSocietaSportiva == null){
-					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('Errore: Devi dichiarare se possiedi o meno un campo sportivo!');");
-				    out.println("location='"+request.getContextPath()+"/jsp/registrazioneUtente.jsp';");
-				    out.println("</script>");
-				}
-				
+								
 				utente.setNome(nome);
 				utente.setCognome(cognome);
 				utente.setCodiceFiscale(codicefiscale);
@@ -212,7 +135,7 @@ public class UserController extends HttpServlet {
 								session.setAttribute("utenteLoggato", true);
 								String message = "Ehy "+utente.getUsername()+", Benvenuto in Found It!";
 								request.getSession().setAttribute("message", message);
-								System.out.println(utente);
+								
 								if(utente.getSocietaSportiva_PartitaIva()!=null && !(utente.getSocietaSportiva_PartitaIva().equals(""))){
 									societa= modelSocieta.doRetrieveByKey(utente.getSocietaSportiva_PartitaIva());
 									session.setAttribute("societa", societa);
@@ -263,8 +186,7 @@ public class UserController extends HttpServlet {
 					// MODIFICA TAB DATI PERSONALI IN PROFILO UTENTE
 					if (action.equalsIgnoreCase("datiPersonali")) {
 						action="";
-						HttpSession session = request.getSession();
-						UtenteBean utenteSessione= (UtenteBean) session.getAttribute("login");
+						UtenteBean utenteSessione= (UtenteBean) request.getSession().getAttribute("login");
 						
 						// Copio tutti i parametri di input nelle variabili locali
 						String nome = request.getParameter("nome");
@@ -275,48 +197,6 @@ public class UserController extends HttpServlet {
 						String cap = request.getParameter("cap");
 						String telefono = request.getParameter("telefono");
 
-						if( ValidationUtil.isEmpty(nome) || !ValidationUtil.isAValidString(nome,ValidationUtil.REGEX_NOME)){
-							out.println("<script type=\"text/javascript\">");
-						    out.println("alert('Errore: nome non inserito oppure non valido!');");
-						    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-						    out.println("</script>");
-						}
-						 if( ValidationUtil.isEmpty(cognome) || !ValidationUtil.isAValidString(cognome,ValidationUtil.REGEX_GENERALE)){
-							out.println("<script type=\"text/javascript\">");
-						    out.println("alert('Errore: cognome non inserito oppure non valido!');");
-						    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-						    out.println("</script>");
-						}
-						 if( ValidationUtil.isEmpty(codicefiscale) || !ValidationUtil.isAValidString(codicefiscale,ValidationUtil.REGEX_CODICE_FISCALE)){
-								out.println("<script type=\"text/javascript\">");
-							    out.println("alert('Errore: codice fiscale non inserita oppure non valida!');");
-							    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-							    out.println("</script>");
-							}
-						 if( ValidationUtil.isEmpty(citta) || !ValidationUtil.isAValidString(citta,ValidationUtil.REGEX_GENERALE)){
-							out.println("<script type=\"text/javascript\">");
-						    out.println("alert('Errore: citta' non inserita oppure non valida!');");
-						    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-						    out.println("</script>");
-						}
-						 if( ValidationUtil.isEmpty(provincia) || !ValidationUtil.isAValidString(provincia,ValidationUtil.REGEX_GENERALE)){
-							out.println("<script type=\"text/javascript\">");
-						    out.println("alert('Errore: provincia non inserita oppure non valida!');");
-						    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-						    out.println("</script>");
-						}
-						 if( ValidationUtil.isEmpty(cap) || !ValidationUtil.isAValidString(cap,ValidationUtil.REGEX_CAP)){
-							out.println("<script type=\"text/javascript\">");
-						    out.println("alert('Errore: cap non inserito oppure non valido!');");
-						    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-						    out.println("</script>");
-						}
-						 if( ValidationUtil.isEmpty(telefono) || !ValidationUtil.isAValidString(telefono,ValidationUtil.REGEX_TELEFONO)){
-							out.println("<script type=\"text/javascript\">");
-						    out.println("alert('Errore: telefono non inserito oppure non valido!');");
-						    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-						    out.println("</script>");
-						}
 						 if(utente!=null){
 							 utente.setNome(nome);
 							 utente.setCognome(cognome);
@@ -330,20 +210,14 @@ public class UserController extends HttpServlet {
 							 utente.setEmail(utenteSessione.getEmail());
 							 utente.setTipo(utenteSessione.getTipo());
 						 }
-						 if(!(utente.equals(utenteSessione))){
+
+						 if(!(utenteSessione.equals(utente))){
 							 try {
 								 modelUtente.doUpdate(utente);
 							 } catch (SQLException e) {
 								 e.printStackTrace();
 							 }
-							 utenteSessione.setNome(nome);
-							 utenteSessione.setCognome(cognome);
-							 utenteSessione.setCodiceFiscale(codicefiscale);
-							 utenteSessione.setCitta(citta);
-							 utenteSessione.setProvincia(provincia);
-							 utenteSessione.setCap(Integer.parseInt(cap));
-							 utenteSessione.setTelefono(telefono);
-							 
+							 utenteSessione=utente;
 						 }
 						 String message = "Dati Personali Modificati!";
 							request.getSession().setAttribute("message", message);
@@ -361,29 +235,9 @@ public class UserController extends HttpServlet {
 							// Copio tutti i parametri di input nelle variabili locali
 							String username = request.getParameter("username");
 							String password = request.getParameter("password");
-							String confpassword = request.getParameter("confpassword");
 							String email = request.getParameter("email");
 							
-							
-							 if( ValidationUtil.isEmpty(password) || !ValidationUtil.isAValidString(password,ValidationUtil.REGEX_PASSWORD)){
-								out.println("<script type=\"text/javascript\">");
-							    out.println("alert('Errore: password non inserita oppure non valida!\n NB:La password deve contenere almeno 1 carattere maiuscolo,1minuscolo e 1 numero e deve essere lunga almeno 8');");
-							    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-							    out.println("</script>");
-							}
-							 if(!confpassword.equals(password)){
-								out.println("<script type=\"text/javascript\">");
-							    out.println("alert('Errore: I campi password e conferma password devono corrispondere!');");
-							    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-							    out.println("</script>");
-							}
-							 if( ValidationUtil.isEmpty(email) || !ValidationUtil.isAValidString(email,ValidationUtil.REGEX_EMAIL)){
-									out.println("<script type=\"text/javascript\">");
-								    out.println("alert('Errore: email non inserita oppure non valida!');");
-								    out.println("location='"+request.getContextPath()+"/jsp/profiloUtente.jsp';");
-								    out.println("</script>");
-							}
-							
+							 							
 							 
 							 if(utente!=null){
 								 utente.setUsername(username);
@@ -405,9 +259,7 @@ public class UserController extends HttpServlet {
 								 } catch (SQLException e) {
 									 e.printStackTrace();
 								 }
-								 utenteSessione.setUsername(username);
-								 utenteSessione.setPassword(password);
-								 utenteSessione.setEmail(email);			 
+								 utenteSessione= utente;			 
 							 }
 							 String message = "Dati Account Modificati!";
 								request.getSession().setAttribute("message", message);

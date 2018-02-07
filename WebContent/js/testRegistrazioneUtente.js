@@ -1,12 +1,12 @@
 //Questa funzione controlla che tutti i campi della registrazione siano compilati correttamente
 var regex  = {
-		nome:"^(?=.{3,25}$)^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$", cognome:"^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$", 
-		codicefiscale:"[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]",citta:"^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$" ,provincia:"^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$" ,
+		nome:"^(?=.{3,25}$)^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$", cognome:"^(?=.{3,25}$)^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$", 
+		codicefiscale:"[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$",citta:"^(?=.{3,25}$)^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$" ,provincia:"^[A-Za-zèùàòé][a-zA-Z'èùàòé ]*$" ,
 		cap:"^[0-9]{5}$" , telefono:"(^[0|3]{1}[0-9]{5,10}$)" , email:"^[a-zA-Z0-9_.-]+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$" ,
-		username:"^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" ,
+		username:"^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$" ,
 		password:"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9$@$!%*?&]{8,30}" , nomeSocieta:"^(?=.{3,25}$)^[A-Za-zèùàòé][a-zA-Z'èùàòé .]*$"
 		,indirizzoSede:"^(?=.{3,25}$)^[A-Za-zèùàòéZ0-9\s\,\''\-.° ]*$" ,partitaIva:"^[0-9]{11}$"
-		, codiceAutenticazione:"^[0-9]{0,24}$", ora:"^([01][0-9]|2[0-3]|[1-9])$", minuti:"^([0-5][0-9])$", numeroCarta:"^[0-9]{16}$", cvvCarta:"^[0-9]{4}$"
+		, codiceAutenticazione:"^[0-9]{1,24}$", ora:"^([01][0-9]|2[0-3]|[1-9])$", minuti:"^([0-5][0-9])$", numeroCarta:"^[0-9]{16}$", cvvCarta:"^[0-9]{4}$"
 		, fascia:"^([01][0-9]|2[0-3]|[1-9])+-+([01][0-9]|2[0-3]|[1-9])$", prezzo:"^([0-9]|[0-9]+.+[0-9])$"
 		}
 
