@@ -17,7 +17,15 @@ public class TestAll{
 		suite.addTestSuite(TestLogin.class);
 		suite.addTestSuite(TestRegistrazioneUtente.class);
 		suite.addTestSuite(TestRicercaCampi.class);
+		suite.addTestSuite(TestModelUtente.class);
+		suite.addTestSuite(TestModelSocieta.class);
+		suite.addTestSuite(TestModelCarta.class);
+		suite.addTestSuite(TestModelCampoSportivo.class);
+		suite.addTestSuite(TestModelPrenotazione.class);
+
 		
+
+
 		return suite;
 	}
 	
