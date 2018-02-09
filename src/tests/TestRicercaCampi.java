@@ -2,7 +2,7 @@ package tests;
 
 import junit.framework.*;
 
-public class testRicercaCampi extends TestCase{
+public class TestRicercaCampi extends TestCase{
 	private String luogo;
 	private int ore;
 	private int minuti;
@@ -38,7 +38,7 @@ public class testRicercaCampi extends TestCase{
 	}
 	
 	public static Test suite(){
-		return new TestSuite(testRicercaCampi.class);
+		return new TestSuite(TestRicercaCampi.class);
 	}
 	
 	public static void main(String[] args) {

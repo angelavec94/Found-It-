@@ -2,7 +2,7 @@ package tests;
 
 import junit.framework.*;
 
-public class testGestioneCarta extends TestCase{
+public class TestGestioneCarta extends TestCase{
 	private String numeroCarta;
 	private String intestatario;
 	private String cvv;
@@ -36,7 +36,7 @@ public class testGestioneCarta extends TestCase{
 	}
 	
 	public static Test suite(){
-		return new TestSuite(testGestioneCarta.class);
+		return new TestSuite(TestGestioneCarta.class);
 	}
 	
 	public static void main(String[] args) {

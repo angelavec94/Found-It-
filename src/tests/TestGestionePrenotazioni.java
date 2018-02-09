@@ -2,7 +2,7 @@ package tests;
 
 import junit.framework.*;
 
-public class testGestionePrenotazioni extends TestCase{
+public class TestGestionePrenotazioni extends TestCase{
 	String data;
 	
 	protected void setUp() throws Exception {
@@ -24,7 +24,7 @@ public class testGestionePrenotazioni extends TestCase{
 	}
 	
 	public static Test suite(){
-		return new TestSuite(testGestionePrenotazioni.class);
+		return new TestSuite(TestGestionePrenotazioni.class);
 	}
 	
 	public static void main(String[] args) {

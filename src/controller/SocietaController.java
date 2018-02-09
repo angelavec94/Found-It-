@@ -17,7 +17,6 @@ import model.SocietaSportivaModelDM;
 import model.UtenteBean;
 import model.UtenteModel;
 import model.UtenteModelDM;
-import util.ValidationUtil;
 
 /**
  * Servlet implementation class SocietaController
