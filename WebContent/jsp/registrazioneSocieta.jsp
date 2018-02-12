@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Found It! | Registrazione Società</title>
+	<script type="text/javascript" src ="<%=request.getContextPath()%>/js/testRegistrazioneUtente.js"></script>
+
 </head>
 <body>
 <%@include file="header.jsp"%>	

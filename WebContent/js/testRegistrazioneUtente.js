@@ -110,7 +110,6 @@ function validateSocieta(){
 	var indirizzoSede = document.registrazioneSocieta.indirizzoSede.value;
 	var partitaIva = document.registrazioneSocieta.partitaIva.value;
 	var telefonoSocieta = document.registrazioneSocieta.telefono.value;
-	var codiceAutenticazione = document.registrazioneSocieta.codiceAutenticazione.value;
 	
 	
 	if (isEmpty(nomeSocieta,"nomeSocieta"))
@@ -147,14 +146,7 @@ function validateSocieta(){
 	{
 		return false;
 	}
-	if (isEmpty(codiceAutenticazione,"codiceAutenticazione"))
-	{
-		return false;
-	}
-	if (!isAValidString(codiceAutenticazione,regex.codiceAutenticazione,"Codice di Autenticazione"))
-	{
-		return false;
-	}
+	
 	return true;
 }
 
